@@ -19,6 +19,7 @@ function App() {
         display: "flex",
         justifyContent: "center",
       }}
+      elevation={3}
     >
       <Container
         sx={{
@@ -41,7 +42,7 @@ function App() {
           }}
         >
           {pokemonsData.map((pokemon, index) => (
-            <PokemonCard pokemon={pokemon} key={index} />
+            <PokemonCard pokemon={pokemon} key={`${pokemon.id}-${index}`} />
           ))}
         </Box>
       </Container>

@@ -2,7 +2,14 @@ import Card from "@mui/material/Card";
 import Box from "@mui/material/Box";
 import Fade from "@mui/material/Fade";
 
+import { primaryColors } from "../colors";
+
 import PokemonType from "./PokemonType";
+import { Typography } from "@mui/material";
+
+export const capitalizeFirstLetter = (string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+};
 
 const PokemonCard = ({ pokemon }) => {
   const formatNumber = (number) => {
@@ -10,6 +17,9 @@ const PokemonCard = ({ pokemon }) => {
     while (id.length < 3) id = "0" + id;
     return "#" + id;
   };
+
+  const cardColor = primaryColors[pokemon.types[0].type.name];
+
   return (
     <Fade in timeout={1000}>
       <Card
@@ -20,6 +30,8 @@ const PokemonCard = ({ pokemon }) => {
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: cardColor,
         }}
       >
         <Box
@@ -30,8 +42,10 @@ const PokemonCard = ({ pokemon }) => {
             width: "85%",
           }}
         >
-          <Box>{pokemon.name}</Box>
-          <Box>{formatNumber(pokemon.id)}</Box>
+          <Typography color="#fff">
+            {capitalizeFirstLetter(pokemon.name)}
+          </Typography>
+          <Typography color="#fff">{formatNumber(pokemon.id)}</Typography>
         </Box>
         <Box
           sx={{
@@ -42,8 +56,11 @@ const PokemonCard = ({ pokemon }) => {
           }}
         >
           <Box>
-            {pokemon.types.map((pokemon) => (
-              <PokemonType type={pokemon.type.name} />
+            {pokemon.types.map((pokemon, index) => (
+              <PokemonType
+                type={pokemon.type.name}
+                key={`${pokemon.type.name}-${index}`}
+              />
             ))}
           </Box>
           <img
