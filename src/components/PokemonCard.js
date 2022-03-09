@@ -2,7 +2,7 @@ import Card from "@mui/material/Card";
 import Box from "@mui/material/Box";
 import Fade from "@mui/material/Fade";
 
-import { primaryColors } from "../colors";
+import { typeColors } from "../colors";
 
 import PokemonType from "./PokemonType";
 import { Typography } from "@mui/material";
@@ -18,11 +18,12 @@ const PokemonCard = ({ pokemon }) => {
     return "#" + id;
   };
 
-  const cardColor = primaryColors[pokemon.types[0].type.name];
+  const cardColor = typeColors[pokemon.types[0].type.name];
 
   return (
     <Fade in timeout={1000}>
       <Card
+        raised
         sx={{
           width: "275px",
           height: "200px",

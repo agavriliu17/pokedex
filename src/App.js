@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import SearchPokemons from "./components/SearchPokemons";
@@ -7,9 +8,40 @@ import Box from "@mui/material/Box";
 import pokemonsData from "./data.json";
 
 import Container from "@mui/material/Container";
-// import Box from "@mui/material/Box";
 
 function App() {
+  const [filters, setFilters] = useState({ name: "", type: "" });
+
+  const applyFilters = (newFilters) => {
+    setFilters(newFilters);
+  };
+
+  const searchType = (pokemon) => {
+    const searchedType = pokemon.types.map((item) => {
+      if (item.type.name === filters.type) return item;
+      return null;
+    });
+    if (searchedType[0] || searchedType[1]) return true;
+    return false;
+  };
+
+  const filteredPokemons = pokemonsData.filter((pokemon) => {
+    if (filters.name === "" && filters.type === "") {
+      return pokemon;
+    } else if (filters.name !== "") {
+      if (
+        pokemon.name.toLocaleLowerCase() === filters.name.toLocaleLowerCase() ||
+        pokemon.id.toString() === filters.name
+      ) {
+        if (filters.type === "") {
+          return pokemon;
+        } else if (searchType(pokemon)) return pokemon;
+      }
+    } else if (filters.type !== "" && searchType(pokemon)) {
+      return pokemon;
+    }
+  });
+
   return (
     <Paper
       sx={{
@@ -31,7 +63,7 @@ function App() {
         <Typography variant="h1" mt={5} mb={5}>
           Pokedex
         </Typography>
-        <SearchPokemons />
+        <SearchPokemons applyFilters={applyFilters} filters={filters} />
         <Box
           sx={{
             alignItems: "center",
@@ -41,7 +73,7 @@ function App() {
             padding: "20px",
           }}
         >
-          {pokemonsData.map((pokemon, index) => (
+          {filteredPokemons.map((pokemon, index) => (
             <PokemonCard pokemon={pokemon} key={`${pokemon.id}-${index}`} />
           ))}
         </Box>
