@@ -8,6 +8,7 @@ import Box from "@mui/material/Box";
 import pokemonsData from "./data.json";
 
 import Container from "@mui/material/Container";
+import UnknownPokemon from "./components/UnknownPokemon";
 
 function App() {
   const [filters, setFilters] = useState({ name: "", type: "" });
@@ -73,9 +74,13 @@ function App() {
             padding: "20px",
           }}
         >
-          {filteredPokemons.map((pokemon, index) => (
-            <PokemonCard pokemon={pokemon} key={`${pokemon.id}-${index}`} />
-          ))}
+          {filteredPokemons.length !== 0 ? (
+            filteredPokemons.map((pokemon, index) => (
+              <PokemonCard pokemon={pokemon} key={`${pokemon.id}-${index}`} />
+            ))
+          ) : (
+            <UnknownPokemon />
+          )}
         </Box>
       </Container>
     </Paper>

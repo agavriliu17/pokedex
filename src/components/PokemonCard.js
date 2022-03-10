@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import Card from "@mui/material/Card";
 import Box from "@mui/material/Box";
 import Fade from "@mui/material/Fade";
@@ -12,6 +14,7 @@ export const capitalizeFirstLetter = (string) => {
 };
 
 const PokemonCard = ({ pokemon }) => {
+  const [hovered, setHovered] = useState(false);
   const formatNumber = (number) => {
     let id = number.toString();
     while (id.length < 3) id = "0" + id;
@@ -23,7 +26,7 @@ const PokemonCard = ({ pokemon }) => {
   return (
     <Fade in timeout={1000}>
       <Card
-        raised
+        raised={hovered}
         sx={{
           width: "275px",
           height: "200px",
@@ -34,6 +37,8 @@ const PokemonCard = ({ pokemon }) => {
           alignItems: "center",
           backgroundColor: cardColor,
         }}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
       >
         <Box
           sx={{
@@ -43,10 +48,22 @@ const PokemonCard = ({ pokemon }) => {
             width: "85%",
           }}
         >
-          <Typography color="#fff">
+          <Typography
+            color="#fff"
+            fontFamily="monospace"
+            fontWeight={700}
+            fontSize={20}
+          >
             {capitalizeFirstLetter(pokemon.name)}
           </Typography>
-          <Typography color="#fff">{formatNumber(pokemon.id)}</Typography>
+          <Typography
+            color="#fff"
+            fontFamily="monospace"
+            fontWeight={700}
+            fontSize={20}
+          >
+            {formatNumber(pokemon.id)}
+          </Typography>
         </Box>
         <Box
           sx={{

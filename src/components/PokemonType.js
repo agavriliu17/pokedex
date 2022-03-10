@@ -17,7 +17,14 @@ const PokemonType = ({ type }) => {
         filter: "brightness(0.9)",
       }}
     >
-      <Typography color="#fff">{capitalizeFirstLetter(type)}</Typography>
+      <Typography
+        color="#fff"
+        fontFamily="monospace"
+        fontWeight={700}
+        fontSize={15}
+      >
+        {capitalizeFirstLetter(type)}
+      </Typography>
     </Box>
   );
 };
