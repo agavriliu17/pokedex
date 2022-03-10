@@ -1,14 +1,16 @@
 import { useState } from "react";
+
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
-import SearchPokemons from "./components/SearchPokemons";
-import PokemonCard from "./components/PokemonCard";
+import Container from "@mui/material/Container";
+import GitHubIcon from "@mui/icons-material/GitHub";
+import IconButton from "@mui/material/IconButton";
 import Box from "@mui/material/Box";
 
 import pokemonsData from "./data.json";
-
-import Container from "@mui/material/Container";
 import UnknownPokemon from "./components/UnknownPokemon";
+import SearchPokemons from "./components/SearchPokemons";
+import PokemonCard from "./components/PokemonCard";
 
 function App() {
   const [filters, setFilters] = useState({ name: "", type: "" });
@@ -41,6 +43,7 @@ function App() {
     } else if (filters.type !== "" && searchType(pokemon)) {
       return pokemon;
     }
+    return null;
   });
 
   return (
@@ -61,10 +64,19 @@ function App() {
           alignItems: "center",
         }}
       >
-        <Typography variant="h1" mt={5} mb={5}>
+        <Box
+          sx={{ display: "flex", justifyContent: "flex-end", width: "100%" }}
+        >
+          <IconButton href="https://github.com/agavriliu17/fiipractic-bytex-pokedex">
+            <GitHubIcon sx={{ color: "#000", fontSize: "40px" }} />
+          </IconButton>
+        </Box>
+
+        <Typography variant="h1" mt={2} mb={5}>
           Pokedex
         </Typography>
         <SearchPokemons applyFilters={applyFilters} filters={filters} />
+
         <Box
           sx={{
             alignItems: "center",

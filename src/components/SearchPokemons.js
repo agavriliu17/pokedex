@@ -59,6 +59,7 @@ const SearchPokemons = ({ applyFilters, filters }) => {
               value={input}
             />
           </Paper>
+
           <Box
             sx={{
               marginLeft: "10px",
@@ -86,6 +87,7 @@ const SearchPokemons = ({ applyFilters, filters }) => {
                 ))}
               </Select>
             </Paper>
+
             <Tooltip title="Search">
               <IconButton
                 variant="contained"
@@ -98,6 +100,7 @@ const SearchPokemons = ({ applyFilters, filters }) => {
             </Tooltip>
           </Box>
         </Box>
+
         {(filters.name !== "" || filters.type !== "") && (
           <Button
             variant="contained"

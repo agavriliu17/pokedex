@@ -1,13 +1,12 @@
 import { useState } from "react";
 
+import Typography from "@mui/material/Typography";
 import Card from "@mui/material/Card";
 import Box from "@mui/material/Box";
 import Fade from "@mui/material/Fade";
 
-import { typeColors } from "../colors";
-
 import PokemonType from "./PokemonType";
-import { Typography } from "@mui/material";
+import { typeColors } from "../colors";
 
 export const capitalizeFirstLetter = (string) => {
   return string.charAt(0).toUpperCase() + string.slice(1);
@@ -15,6 +14,7 @@ export const capitalizeFirstLetter = (string) => {
 
 const PokemonCard = ({ pokemon }) => {
   const [hovered, setHovered] = useState(false);
+
   const formatNumber = (number) => {
     let id = number.toString();
     while (id.length < 3) id = "0" + id;
@@ -65,6 +65,7 @@ const PokemonCard = ({ pokemon }) => {
             {formatNumber(pokemon.id)}
           </Typography>
         </Box>
+
         <Box
           sx={{
             alignItems: "center",
