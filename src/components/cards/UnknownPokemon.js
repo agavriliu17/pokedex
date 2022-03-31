@@ -2,7 +2,7 @@ import Card from "@mui/material/Card";
 import Typography from "@mui/material/Typography";
 import Fade from "@mui/material/Fade";
 
-import pokemon from "../images/unknown_pokemon.png";
+import pokemon from "../../images/unknown_pokemon.png";
 
 const UnknownPokemon = () => {
   return (

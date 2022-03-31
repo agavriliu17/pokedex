@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 
 import Paper from "@mui/material/Paper";
-import Pagination from "@mui/material/Pagination";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import GitHubIcon from "@mui/icons-material/GitHub";
@@ -10,20 +9,15 @@ import Box from "@mui/material/Box";
 
 import { getPokemons } from "./helpers/apiHelper";
 import pokemonsData from "./data.json";
-import UnknownPokemon from "./components/UnknownPokemon";
+import UnknownPokemon from "./components/cards/UnknownPokemon";
 import SearchPokemons from "./components/SearchPokemons";
-import PokemonCard from "./components/PokemonCard";
-import { Skeleton } from "@mui/material";
-import LoadingCard from "./components/LoadingCard";
+import PreviewCard from "./components/cards/PreviewCard";
+import LoadingCard from "./components/cards/LoadingCard";
 
 function App() {
   const [pokemons, setPokemons] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filters, setFilters] = useState({ name: "", type: "" });
-  const [page, setPage] = useState(1);
-  const handleChange = (event, value) => {
-    setPage(value);
-  };
 
   useEffect(() => {
     (async function () {
@@ -102,22 +96,22 @@ function App() {
         </Typography>
         <SearchPokemons applyFilters={applyFilters} filters={filters} />
 
-        {loading ? (
-          <Skeleton width={210} height={118} />
-        ) : (
-          <>
-            <Box
-              sx={{
-                alignItems: "center",
-                display: "flex",
-                flexWrap: "wrap",
-                justifyContent: "center",
-                padding: "20px",
-              }}
-            >
+        <Box
+          sx={{
+            alignItems: "center",
+            display: "flex",
+            flexWrap: "wrap",
+            justifyContent: "center",
+            padding: "20px",
+          }}
+        >
+          {loading ? (
+            [...Array(9)].map((el, ind) => <LoadingCard key={ind} />)
+          ) : (
+            <>
               {pokemons.length !== 0 ? (
                 pokemons.map((pokemon, index) => (
-                  <PokemonCard
+                  <PreviewCard
                     pokemon={pokemon}
                     key={`${pokemon.id}-${index}`}
                   />
@@ -126,10 +120,9 @@ function App() {
               ) : (
                 <UnknownPokemon />
               )}
-            </Box>
-            <Pagination count={10} page={page} onChange={handleChange} />
-          </>
-        )}
+            </>
+          )}
+        </Box>
       </Container>
     </Paper>
   );

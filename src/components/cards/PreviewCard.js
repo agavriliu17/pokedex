@@ -5,21 +5,17 @@ import Card from "@mui/material/Card";
 import Box from "@mui/material/Box";
 import Fade from "@mui/material/Fade";
 
-import PokemonType from "./PokemonType";
-import { typeColors } from "../colors";
+import PokemonType from "../PokemonType";
+import {
+  capitalizeFirstLetter,
+  formatNumber,
+} from "../../helpers/pokemonHelper";
+import { typeColors } from "../../colors";
+import { useNavigate } from "react-router-dom";
 
-export const capitalizeFirstLetter = (string) => {
-  return string.charAt(0).toUpperCase() + string.slice(1);
-};
-
-const PokemonCard = ({ pokemon }) => {
+const PreviewCard = ({ pokemon }) => {
   const [hovered, setHovered] = useState(false);
-
-  const formatNumber = (number) => {
-    let id = number.toString();
-    while (id.length < 3) id = "0" + id;
-    return "#" + id;
-  };
+  const navigate = useNavigate();
 
   const cardColor = typeColors[pokemon.types[0].type.name];
 
@@ -39,6 +35,7 @@ const PokemonCard = ({ pokemon }) => {
         }}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
+        onClick={() => navigate(`/pokemon/${pokemon.id}`)}
       >
         <Box
           sx={{
@@ -94,4 +91,4 @@ const PokemonCard = ({ pokemon }) => {
   );
 };
 
-export default PokemonCard;
+export default PreviewCard;

@@ -2,7 +2,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
 import { typeColors } from "../colors";
-import { capitalizeFirstLetter } from "./PokemonCard";
+import { capitalizeFirstLetter } from "../helpers/pokemonHelper";
 
 const PokemonType = ({ type }) => {
   return (
@@ -13,6 +13,7 @@ const PokemonType = ({ type }) => {
         padding: "7px",
         textAlign: "center",
         width: "80px",
+        height: "25px",
         backgroundColor: typeColors[type],
         filter: "brightness(0.9)",
       }}
