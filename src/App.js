@@ -64,7 +64,6 @@ function App() {
     return null;
   });
 
-  console.log(pokemons[0]);
   return (
     <Paper
       sx={{

@@ -8,10 +8,10 @@ ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route index element={<App />} />
-        <Route path="pokemon" element={<App />} />
+        <Route path="/" element={<App />} />
+        {/* <Route path="pokemon" element={<App />} /> */}
         <Route path="pokemon/:pokemonId" element={<Pokemon />} />
-        <Route path="*" element={<App />} />
+        {/* <Route path="*" element={<App />} /> */}
       </Routes>
     </BrowserRouter>
   </React.StrictMode>,

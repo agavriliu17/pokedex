@@ -8,7 +8,22 @@ import {
   formatNumber,
 } from "../../helpers/pokemonHelper";
 
-const MainCard = ({ pokemon, color }) => {
+const InfoBlock = ({ title, content }) => {
+  return (
+    <Box
+      sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+    >
+      <Typography fontFamily="monospace" fontWeight="700" fontSize="20px">
+        {title}
+      </Typography>
+      <Typography fontFamily="monospace" fontWeight="400">
+        {content}
+      </Typography>
+    </Box>
+  );
+};
+
+const MainCard = ({ pokemon, color, species }) => {
   return (
     <Card
       sx={{
@@ -18,6 +33,7 @@ const MainCard = ({ pokemon, color }) => {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
+        marginLeft: "25px",
       }}
     >
       <Box
@@ -61,6 +77,29 @@ const MainCard = ({ pokemon, color }) => {
         height="400px"
         width="400px"
       />
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-evenly",
+          width: "100%",
+        }}
+      >
+        <InfoBlock title="Weight" content={`${pokemon.weight / 10} kg`} />
+        <InfoBlock title="Height" content={`${pokemon.height / 10} meters`} />
+        <InfoBlock
+          title="Color"
+          content={`${capitalizeFirstLetter(species?.color?.name)}`}
+        />
+        <InfoBlock
+          title="Habitat"
+          content={`${capitalizeFirstLetter(species?.habitat?.name)}`}
+        />
+        <InfoBlock
+          title="Shape"
+          content={`${capitalizeFirstLetter(species?.shape?.name)}`}
+        />
+      </Box>
     </Card>
   );
 };
