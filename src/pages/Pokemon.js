@@ -25,6 +25,7 @@ import { normalizeString } from "../helpers/pokemonHelper";
 import MainCard from "../components/cards/MainCard";
 import EvolutionsCard from "../components/cards/EvolutionsCard";
 import SpritesCard from "../components/cards/SpritesCard";
+import CatchRateCard from "../components/cards/CatchRateCard";
 
 const fetchEvolutionChain = (url) => {
   if (url) {
@@ -231,30 +232,37 @@ const Pokemon = () => {
                 />
               ))}
             </Box>
-            <Box sx={{ marginTop: "25px", marginBottom: "25px" }}>
-              <Typography
-                variant="h5"
-                fontFamily="monospace"
-                fontWeight="400"
-                mb="15px"
-                mt="15px"
-              >
-                Sprites
-              </Typography>
-              <SpritesCard color={color} pokemon={pokemon} />
-            </Box>
             <Box
               sx={{
+                marginTop: "25px",
+                marginBottom: "25px",
                 display: "flex",
                 flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "space-between",
-                width: "100%",
-                marginBottom: "40px",
               }}
             >
-              <Button variant="contained">Previous Pokemon</Button>
-              <Button variant="contained">Next Pokemon</Button>
+              <CatchRateCard
+                cardColor={color}
+                catchRate={species.capture_rate}
+                pokemonHealth={pokemon.stats[0].base_stat}
+              />
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  margin: "25px",
+                }}
+              >
+                <Typography
+                  variant="h5"
+                  fontFamily="monospace"
+                  fontWeight="400"
+                  mb="15px"
+                  mt="15px"
+                >
+                  Sprites
+                </Typography>
+                <SpritesCard color={color} pokemon={pokemon} />
+              </Box>
             </Box>
           </>
         )}

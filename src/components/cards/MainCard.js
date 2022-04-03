@@ -45,20 +45,10 @@ const MainCard = ({ pokemon, color, species }) => {
         }}
       >
         <Box sx={{ display: "flex", flexDirection: "column" }}>
-          <Typography
-            color="#fff"
-            fontFamily="monospace"
-            fontWeight={700}
-            fontSize={30}
-          >
+          <Typography fontFamily="monospace" fontWeight={700} fontSize={30}>
             {capitalizeFirstLetter(pokemon.name)}
           </Typography>
-          <Typography
-            color="#fff"
-            fontFamily="monospace"
-            fontWeight={700}
-            fontSize={20}
-          >
+          <Typography fontFamily="monospace" fontWeight={700} fontSize={20}>
             {formatNumber(pokemon.id)}
           </Typography>
         </Box>
