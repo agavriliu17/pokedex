@@ -19,9 +19,9 @@ import {
   getPokemon,
   getPokemonSpecies,
   getAllEvolutions,
-} from "../helpers/apiHelper";
+} from "../resources/apiHelper";
 import OutlinedInput from "@mui/material/OutlinedInput";
-import { normalizeString } from "../helpers/pokemonHelper";
+import { normalizeString } from "../resources/pokemonHelper";
 import MainCard from "../components/cards/MainCard";
 import EvolutionsCard from "../components/cards/EvolutionsCard";
 import SpritesCard from "../components/cards/SpritesCard";

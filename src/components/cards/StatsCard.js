@@ -5,9 +5,10 @@ import Grid from "@mui/material/Grid";
 import Tooltip from "@mui/material/Tooltip";
 
 import LinearProgress from "@mui/material/LinearProgress";
-import { normalizeString } from "../../helpers/pokemonHelper";
+import { normalizeString } from "../../resources/pokemonHelper";
 
 const StatsCard = ({ cardColor, stats }) => {
+  //TODO: Fix for values >100
   return (
     <Card
       sx={{
@@ -18,6 +19,7 @@ const StatsCard = ({ cardColor, stats }) => {
         height: "150px",
         backgroundColor: cardColor,
         padding: "20px",
+        borderRadius: "15px",
       }}
     >
       {stats.map((stat, index) => (

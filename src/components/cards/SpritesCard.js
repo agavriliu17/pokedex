@@ -41,6 +41,7 @@ const SpritesCard = ({ color, pokemon }) => {
         alignItems: "center",
         padding: "20px",
         flexWrap: "wrap",
+        borderRadius: "15px",
       }}
     >
       <Box sx={{ display: "flex", flexDirection: "row" }}>

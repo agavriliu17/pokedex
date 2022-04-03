@@ -12,7 +12,7 @@ import PokemonType from "../PokemonType";
 import {
   capitalizeFirstLetter,
   formatNumber,
-} from "../../helpers/pokemonHelper";
+} from "../../resources/pokemonHelper";
 
 const EvolutionsCard = ({ color, evolutions }) => {
   const navigate = useNavigate();
@@ -29,6 +29,7 @@ const EvolutionsCard = ({ color, evolutions }) => {
         alignItems: "center",
         padding: "20px",
         flexWrap: "wrap",
+        borderRadius: "15px",
       }}
     >
       {evolutions.map((evo, index) => (

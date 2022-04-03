@@ -11,7 +11,7 @@ import Button from "@mui/material/Button";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import Fade from "@mui/material/Fade";
 
-import { capitalizeFirstLetter } from "../helpers/pokemonHelper";
+import { capitalizeFirstLetter } from "../resources/pokemonHelper";
 import { typeColors } from "../colors";
 import pokeBall from "../images/pokeBall.png";
 

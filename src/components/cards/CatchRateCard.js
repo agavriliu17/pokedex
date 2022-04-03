@@ -60,6 +60,7 @@ const CatchRateCard = ({ cardColor, catchRate, pokemonHealth }) => {
   };
 
   const calculateCatchRate = () => {
+    //TODO: Validate data
     const p0 = statusAilment[form.status] / (ballMod[form.pokeball] + 1);
 
     const f =
@@ -67,8 +68,6 @@ const CatchRateCard = ({ cardColor, catchRate, pokemonHealth }) => {
       pokemonHealth *
       0.01 *
       12;
-
-    // console.log(typeof form.health);
 
     const p1 = ((catchRate / (ballMod[form.pokeball] + 1)) * (f + 1)) / 256;
 
@@ -88,6 +87,7 @@ const CatchRateCard = ({ cardColor, catchRate, pokemonHealth }) => {
         backgroundColor: cardColor,
         padding: "20px",
         margin: "25px",
+        borderRadius: "15px",
       }}
     >
       <Typography

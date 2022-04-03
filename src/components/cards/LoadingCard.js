@@ -13,6 +13,7 @@ const LoadingCard = () => {
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "#D3D3D3",
+        borderRadius: "15px",
       }}
     >
       <Skeleton width="225px" height="25px" sx={{ marginBottom: "20px" }} />

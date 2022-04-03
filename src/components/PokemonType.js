@@ -2,7 +2,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
 import { typeColors } from "../colors";
-import { capitalizeFirstLetter, getTypeIcon } from "../helpers/pokemonHelper";
+import { capitalizeFirstLetter, getTypeIcon } from "../resources/pokemonHelper";
 
 const PokemonType = ({ type }) => {
   return (

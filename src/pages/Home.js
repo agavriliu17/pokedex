@@ -7,14 +7,17 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 import IconButton from "@mui/material/IconButton";
 import Box from "@mui/material/Box";
 
-import { getPokemons } from "./helpers/apiHelper";
-import pokemonsData from "./data.json";
-import UnknownPokemon from "./components/cards/UnknownPokemon";
-import SearchPokemons from "./components/SearchPokemons";
-import PreviewCard from "./components/cards/PreviewCard";
-import LoadingCard from "./components/cards/LoadingCard";
+import { getPokemons } from "../resources/apiHelper";
+import pokemonsData from "../data.json";
+import UnknownPokemon from "../components/cards/UnknownPokemon";
+import SearchPokemons from "../components/SearchPokemons";
+import PreviewCard from "../components/cards/PreviewCard";
+import LoadingCard from "../components/cards/LoadingCard";
 
-function App() {
+import PokemonMenu from "../components/cards/PokemonMenu";
+import { MenuProvider } from "../resources/context/MenuContext";
+
+function Home() {
   const [pokemons, setPokemons] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filters, setFilters] = useState({ name: "", type: "" });
@@ -95,36 +98,39 @@ function App() {
         </Typography>
         <SearchPokemons applyFilters={applyFilters} filters={filters} />
 
-        <Box
-          sx={{
-            alignItems: "center",
-            display: "flex",
-            flexWrap: "wrap",
-            justifyContent: "center",
-            padding: "20px",
-          }}
-        >
-          {loading ? (
-            [...Array(9)].map((el, ind) => <LoadingCard key={ind} />)
-          ) : (
-            <>
-              {pokemons.length !== 0 ? (
-                pokemons.map((pokemon, index) => (
-                  <PreviewCard
-                    pokemon={pokemon}
-                    key={`${pokemon.id}-${index}`}
-                  />
-                  // <LoadingCard />
-                ))
-              ) : (
-                <UnknownPokemon />
-              )}
-            </>
-          )}
-        </Box>
+        <MenuProvider>
+          <Box
+            sx={{
+              alignItems: "center",
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: "center",
+              padding: "20px",
+            }}
+          >
+            {loading ? (
+              [...Array(9)].map((el, ind) => <LoadingCard key={ind} />)
+            ) : (
+              <>
+                {pokemons.length !== 0 ? (
+                  pokemons.map((pokemon, index) => (
+                    <PreviewCard
+                      pokemon={pokemon}
+                      key={`${pokemon.id}-${index}`}
+                    />
+                    // <LoadingCard />
+                  ))
+                ) : (
+                  <UnknownPokemon />
+                )}
+              </>
+            )}
+          </Box>
+          <PokemonMenu />
+        </MenuProvider>
       </Container>
     </Paper>
   );
 }
 
-export default App;
+export default Home;

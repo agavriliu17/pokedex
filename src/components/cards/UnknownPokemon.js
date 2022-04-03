@@ -18,6 +18,7 @@ const UnknownPokemon = () => {
           justifyContent: "center",
           alignItems: "center",
           backgroundColor: "#808080",
+          borderRadius: "15px",
         }}
       >
         <Typography m={1} fontSize={25} textAlign="center" color="#fff">

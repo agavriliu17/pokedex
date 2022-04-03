@@ -6,7 +6,7 @@ import PokemonType from "../PokemonType";
 import {
   capitalizeFirstLetter,
   formatNumber,
-} from "../../helpers/pokemonHelper";
+} from "../../resources/pokemonHelper";
 
 const InfoBlock = ({ title, content }) => {
   return (
@@ -34,6 +34,7 @@ const MainCard = ({ pokemon, color, species }) => {
         flexDirection: "column",
         alignItems: "center",
         marginLeft: "25px",
+        borderRadius: "15px",
       }}
     >
       <Box
