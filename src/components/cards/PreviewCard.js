@@ -4,9 +4,8 @@ import Typography from "@mui/material/Typography";
 import Card from "@mui/material/Card";
 import Box from "@mui/material/Box";
 import Fade from "@mui/material/Fade";
-import Checkbox from "@mui/material/Checkbox";
-import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
-import Favorite from "@mui/icons-material/Favorite";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+
 import MenuContext from "../../resources/context/MenuContext";
 
 import PokemonType from "../PokemonType";
@@ -19,10 +18,13 @@ import { useNavigate } from "react-router-dom";
 
 const PreviewCard = ({ pokemon }) => {
   const [hovered, setHovered] = useState(false);
-  const { selectPokemon } = useContext(MenuContext);
+  const { selectPokemon, favoritePokemons } = useContext(MenuContext);
+
   const navigate = useNavigate();
 
   const cardColor = typeColors[pokemon.types[0].type.name];
+
+  const isFavorite = favoritePokemons.find((fav) => fav.id === pokemon.id);
 
   return (
     <>
@@ -42,7 +44,7 @@ const PreviewCard = ({ pokemon }) => {
           }}
           onMouseEnter={() => setHovered(true)}
           onMouseLeave={() => setHovered(false)}
-          onContextMenu={() => selectPokemon(pokemon.id)}
+          onContextMenu={() => selectPokemon(pokemon)}
           onClick={() => navigate(`/pokemon/${pokemon.id}`)}
         >
           <Box
@@ -68,7 +70,12 @@ const PreviewCard = ({ pokemon }) => {
                 alignItems: "center",
               }}
             >
-              <Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />} />
+              {isFavorite && (
+                <FavoriteIcon
+                  fontSize="small"
+                  sx={{ marginRight: "5px", color: "#7C0D0E" }}
+                />
+              )}
 
               <Typography
                 color="#fff"

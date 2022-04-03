@@ -1,6 +1,11 @@
+import { useContext } from "react";
 import Card from "@mui/material/Card";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import Checkbox from "@mui/material/Checkbox";
+import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
+import Favorite from "@mui/icons-material/Favorite";
+import MenuContext from "../../resources/context/MenuContext";
 
 import PokemonType from "../PokemonType";
 import {
@@ -24,17 +29,28 @@ const InfoBlock = ({ title, content }) => {
 };
 
 const MainCard = ({ pokemon, color, species }) => {
+  const { favoritePokemons, addToFavorites, removeFromFavorites } =
+    useContext(MenuContext);
+
+  const isFavorite = favoritePokemons.find((fav) => fav.id === pokemon.id);
+
+  const handleCheckbox = () => {
+    if (isFavorite) removeFromFavorites(pokemon);
+    else addToFavorites(pokemon);
+  };
+
   return (
     <Card
       sx={{
         width: "500px",
-        height: "600px",
+        minHeight: "500px",
         backgroundColor: color,
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         marginLeft: "25px",
         borderRadius: "15px",
+        padding: "15px",
       }}
     >
       <Box
@@ -52,6 +68,15 @@ const MainCard = ({ pokemon, color, species }) => {
           <Typography fontFamily="monospace" fontWeight={700} fontSize={20}>
             {formatNumber(pokemon.id)}
           </Typography>
+          <Checkbox
+            checked={isFavorite}
+            onChange={handleCheckbox}
+            icon={<FavoriteBorder fontSize="large" />}
+            checkedIcon={
+              <Favorite sx={{ color: "#7C0D0E" }} fontSize="large" />
+            }
+            sx={{ width: "fit-content" }}
+          />
         </Box>
         <Box sx={{ display: "flex", flexDirection: "row" }}>
           {pokemon.types.map((pokemon, index) => (
@@ -74,6 +99,7 @@ const MainCard = ({ pokemon, color, species }) => {
           flexDirection: "row",
           justifyContent: "space-evenly",
           width: "100%",
+          marginBottom: "20px",
         }}
       >
         <InfoBlock title="Weight" content={`${pokemon.weight / 10} kg`} />

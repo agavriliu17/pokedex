@@ -6,13 +6,12 @@ import MenuItem from "@mui/material/MenuItem";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import Typography from "@mui/material/Typography";
-import ContentCut from "@mui/icons-material/ContentCut";
-import ContentCopy from "@mui/icons-material/ContentCopy";
 import Cloud from "@mui/icons-material/Cloud";
 import { useNavigate } from "react-router-dom";
 
 import InfoIcon from "@mui/icons-material/Info";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import HeartBrokenIcon from "@mui/icons-material/HeartBroken";
 
 import useContextMenu from "../../resources/useContextMenu";
 import MenuContext from "../../resources/context/MenuContext";
@@ -22,7 +21,16 @@ export default function PokemonMenu() {
   const { anchorPoint, show } = useContextMenu();
   const navigate = useNavigate();
 
-  const { selectedPokemon, selectPokemon } = React.useContext(MenuContext);
+  const {
+    selectedPokemon,
+    favoritePokemons,
+    addToFavorites,
+    removeFromFavorites,
+  } = React.useContext(MenuContext);
+
+  const isFavorite = favoritePokemons.find(
+    (fav) => fav.id === selectedPokemon.id
+  );
 
   if (show) {
     return (
@@ -37,24 +45,36 @@ export default function PokemonMenu() {
       >
         {selectedPokemon ? (
           <MenuList>
-            <MenuItem onClick={() => navigate(`/pokemon/${selectedPokemon}`)}>
+            <MenuItem
+              onClick={() => navigate(`/pokemon/${selectedPokemon.id}`)}
+            >
               <ListItemIcon>
                 <InfoIcon fontSize="small" />
               </ListItemIcon>
               <ListItemText>See more details</ListItemText>
             </MenuItem>
-            <MenuItem>
-              <ListItemIcon>
-                <FavoriteIcon fontSize="small" />
-              </ListItemIcon>
-              <ListItemText>Add to favorites</ListItemText>
-            </MenuItem>
+            {isFavorite ? (
+              <MenuItem onClick={() => removeFromFavorites(selectedPokemon)}>
+                <ListItemIcon>
+                  <HeartBrokenIcon fontSize="small" />
+                </ListItemIcon>
+                <ListItemText>Remove from favorites</ListItemText>
+              </MenuItem>
+            ) : (
+              <MenuItem onClick={() => addToFavorites(selectedPokemon)}>
+                <ListItemIcon>
+                  <FavoriteIcon fontSize="small" />
+                </ListItemIcon>
+                <ListItemText>Add to favorites</ListItemText>
+              </MenuItem>
+            )}
+
             <Divider />
             <MenuItem>
               <ListItemIcon>
                 <Cloud fontSize="small" />
               </ListItemIcon>
-              <ListItemText>ID: {selectedPokemon}</ListItemText>
+              <ListItemText>ID: {selectedPokemon.id}</ListItemText>
             </MenuItem>
           </MenuList>
         ) : (
@@ -73,7 +93,7 @@ export default function PokemonMenu() {
       </Paper>
     );
   } else {
-    selectPokemon(null);
+    // selectPokemon(null);
     return <></>;
   }
 }

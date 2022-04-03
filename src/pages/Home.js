@@ -1,10 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import IconButton from "@mui/material/IconButton";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import MenuContext from "../resources/context/MenuContext";
+
 import Box from "@mui/material/Box";
 
 import { getPokemons } from "../resources/apiHelper";
@@ -15,12 +19,17 @@ import PreviewCard from "../components/cards/PreviewCard";
 import LoadingCard from "../components/cards/LoadingCard";
 
 import PokemonMenu from "../components/cards/PokemonMenu";
-import { MenuProvider } from "../resources/context/MenuContext";
 
 function Home() {
   const [pokemons, setPokemons] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filters, setFilters] = useState({ name: "", type: "" });
+  const [value, setValue] = useState(0);
+  const { favoritePokemons } = useContext(MenuContext);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
   useEffect(() => {
     (async function () {
@@ -98,36 +107,51 @@ function Home() {
         </Typography>
         <SearchPokemons applyFilters={applyFilters} filters={filters} />
 
-        <MenuProvider>
-          <Box
-            sx={{
-              alignItems: "center",
-              display: "flex",
-              flexWrap: "wrap",
-              justifyContent: "center",
-              padding: "20px",
-            }}
-          >
-            {loading ? (
-              [...Array(9)].map((el, ind) => <LoadingCard key={ind} />)
-            ) : (
-              <>
-                {pokemons.length !== 0 ? (
-                  pokemons.map((pokemon, index) => (
-                    <PreviewCard
-                      pokemon={pokemon}
-                      key={`${pokemon.id}-${index}`}
-                    />
-                    // <LoadingCard />
-                  ))
-                ) : (
-                  <UnknownPokemon />
-                )}
-              </>
-            )}
-          </Box>
-          <PokemonMenu />
-        </MenuProvider>
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          aria-label="basic tabs example"
+        >
+          <Tab label="All Pokemons" sx={{ textTransform: "none" }} />
+          <Tab label="Favorites" sx={{ textTransform: "none" }} />
+        </Tabs>
+        <Box
+          sx={{
+            alignItems: "center",
+            display: "flex",
+            flexWrap: "wrap",
+            justifyContent: "center",
+            padding: "20px",
+          }}
+        >
+          {value === 0 ? (
+            <>
+              {loading ? (
+                [...Array(9)].map((el, ind) => <LoadingCard key={ind} />)
+              ) : (
+                <>
+                  {pokemons.length !== 0 ? (
+                    pokemons.map((pokemon, index) => (
+                      <PreviewCard
+                        pokemon={pokemon}
+                        key={`${pokemon.id}-${index}`}
+                      />
+                    ))
+                  ) : (
+                    <UnknownPokemon />
+                  )}
+                </>
+              )}
+            </>
+          ) : favoritePokemons.length !== 0 ? (
+            favoritePokemons.map((fav, index) => (
+              <PreviewCard pokemon={fav} key={`${fav.id}-${index}`} />
+            ))
+          ) : (
+            <Typography>No pokemons</Typography>
+          )}
+        </Box>
+        <PokemonMenu />
       </Container>
     </Paper>
   );
