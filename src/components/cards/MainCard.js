@@ -41,6 +41,7 @@ const MainCard = ({ pokemon, color, species }) => {
 
   return (
     <Card
+      raised
       sx={{
         width: "500px",
         minHeight: "500px",

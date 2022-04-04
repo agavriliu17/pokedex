@@ -4,7 +4,6 @@ import Typography from "@mui/material/Typography";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import MenuContext from "../resources/context/MenuContext";
-import Layout from "./Layout";
 
 import Box from "@mui/material/Box";
 
@@ -74,7 +73,7 @@ function Home() {
   });
 
   return (
-    <Layout>
+    <>
       <SearchPokemons applyFilters={applyFilters} filters={filters} />
 
       <Tabs
@@ -122,7 +121,7 @@ function Home() {
         )}
       </Box>
       <PokemonMenu />
-    </Layout>
+    </>
   );
 }
 

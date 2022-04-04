@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const getPokemons = async () => {
   const data = await axios
-    .get(`https://pokeapi.co/api/v2/pokemon?limit=10&offset=0`)
+    .get(`https://pokeapi.co/api/v2/pokemon?limit=100&offset=0`)
     .then((res) => res.data);
 
   const promises = data.results.map((result) => axios.get(result.url));
@@ -14,7 +14,7 @@ export const getPokemons = async () => {
   //   return resolvedData;
 
   return new Promise((resolve) => {
-    setTimeout(() => resolve(resolvedData), 3000);
+    setTimeout(() => resolve(resolvedData), 1000);
   });
 };
 

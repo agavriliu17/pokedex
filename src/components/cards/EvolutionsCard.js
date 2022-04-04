@@ -19,6 +19,7 @@ const EvolutionsCard = ({ color, evolutions }) => {
 
   return (
     <Card
+      raised
       sx={{
         minHeight: "200px",
         backgroundColor: color,

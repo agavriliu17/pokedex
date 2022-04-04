@@ -11,6 +11,7 @@ import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import CircularProgress from "@mui/material/CircularProgress";
 import Paper from "@mui/material/Paper";
+import { useTheme } from "@mui/material/styles";
 
 import Button from "@mui/material/Button";
 
@@ -51,6 +52,7 @@ const CatchRateCard = ({ cardColor, catchRate, pokemonHealth }) => {
     health: 100,
     pokeball: "",
   });
+  const theme = useTheme();
 
   const handleInputUpdate = (ev, key) => {
     setForm({ ...form, [key]: ev.target.value });
@@ -79,6 +81,7 @@ const CatchRateCard = ({ cardColor, catchRate, pokemonHealth }) => {
 
   return (
     <Card
+      raised
       sx={{
         display: "flex",
         flexDirection: "column",
@@ -114,12 +117,22 @@ const CatchRateCard = ({ cardColor, catchRate, pokemonHealth }) => {
                 width: "250px",
                 borderRadius: "30px",
                 height: "35px",
+                backgroundColor:
+                  theme.palette.mode === "light" ? "#fff" : "#2d333b",
               }}
             >
               <Select
                 input={<OutlinedInput placeholder="Chip" />}
                 label="Age"
-                MenuProps={{ PaperProps: { sx: { maxHeight: 200 } } }}
+                MenuProps={{
+                  PaperProps: {
+                    sx: {
+                      maxHeight: 200,
+                      backgroundColor:
+                        theme.palette.mode === "light" ? "#fff" : "#2d333b",
+                    },
+                  },
+                }}
                 sx={{
                   width: "250px",
                   height: "35px",
@@ -161,6 +174,8 @@ const CatchRateCard = ({ cardColor, catchRate, pokemonHealth }) => {
                 width: "250px",
                 borderRadius: "30px",
                 height: "35px",
+                backgroundColor:
+                  theme.palette.mode === "light" ? "#fff" : "#2d333b",
               }}
             >
               <OutlinedInput

@@ -31,6 +31,7 @@ const SpritesCard = ({ color, pokemon }) => {
     pokemon.sprites;
   return (
     <Card
+      raised
       sx={{
         width: "100%",
         minHeight: "200px",

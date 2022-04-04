@@ -1,14 +1,17 @@
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import GitHubIcon from "@mui/icons-material/GitHub";
-import IconButton from "@mui/material/IconButton";
+// import GitHubIcon from "@mui/icons-material/GitHub";
+// import IconButton from "@mui/material/IconButton";
 import Button from "@mui/material/Button";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useTheme } from "@mui/material/styles";
 
+import SwitchMode from "../components/SwitchMode";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 
 const Layout = ({ children }) => {
+  const theme = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -19,7 +22,7 @@ const Layout = ({ children }) => {
       sx={{
         width: "100%",
         minHeight: "100vh",
-        backgroundColor: "#fff7e8",
+        backgroundColor: theme.palette.background,
         display: "flex",
         justifyContent: "center",
       }}
@@ -57,14 +60,27 @@ const Layout = ({ children }) => {
               Play GTP
             </Button>
           )}
-          <IconButton href="https://github.com/agavriliu17/fiipractic-bytex-pokedex">
-            <GitHubIcon sx={{ color: "#000", fontSize: "40px" }} />
-          </IconButton>
+          <SwitchMode />
         </Box>
 
-        <Typography variant="h1" mt={2} mb={5}>
-          Pokedex
-        </Typography>
+        <Button
+          variant="text"
+          disableFocusRipple
+          disableElevation
+          disableRipple
+          sx={{
+            marginTop: 2,
+            marginBottom: 5,
+            "&.MuiButtonBase-root:hover": {
+              bgcolor: "transparent",
+            },
+          }}
+          onClick={() => navigate(`/`)}
+        >
+          <Typography variant="h1" sx={{ textDecoration: "none" }}>
+            Pokedex
+          </Typography>
+        </Button>
         {children}
       </Container>
     </Paper>

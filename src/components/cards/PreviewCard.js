@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useContext } from "react";
 
 import Typography from "@mui/material/Typography";
 import Card from "@mui/material/Card";
@@ -17,12 +17,12 @@ import { typeColors } from "../../colors";
 import { useNavigate } from "react-router-dom";
 
 const PreviewCard = ({ pokemon }) => {
-  const [hovered, setHovered] = useState(false);
   const { selectPokemon, favoritePokemons } = useContext(MenuContext);
 
   const navigate = useNavigate();
 
   const cardColor = typeColors[pokemon.types[0].type.name];
+  const hoverColor = typeColors.hover[pokemon.types[0].type.name];
 
   const isFavorite = favoritePokemons.find((fav) => fav.id === pokemon.id);
 
@@ -30,7 +30,7 @@ const PreviewCard = ({ pokemon }) => {
     <>
       <Fade in timeout={1000}>
         <Card
-          raised={hovered}
+          raised
           sx={{
             width: "275px",
             height: "200px",
@@ -41,9 +41,10 @@ const PreviewCard = ({ pokemon }) => {
             alignItems: "center",
             backgroundColor: cardColor,
             borderRadius: "15px",
+            "&:hover": {
+              backgroundColor: hoverColor,
+            },
           }}
-          onMouseEnter={() => setHovered(true)}
-          onMouseLeave={() => setHovered(false)}
           onContextMenu={() => selectPokemon(pokemon)}
           onClick={() => navigate(`/pokemon/${pokemon.id}`)}
         >

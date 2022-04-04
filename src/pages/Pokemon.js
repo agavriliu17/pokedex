@@ -4,7 +4,6 @@ import Box from "@mui/material/Box";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 // import Button from "@mui/material/Button";
-import Layout from "./Layout";
 
 import { useParams } from "react-router";
 import { useEffect, useState } from "react";
@@ -24,6 +23,7 @@ import MainCard from "../components/cards/MainCard";
 import EvolutionsCard from "../components/cards/EvolutionsCard";
 import SpritesCard from "../components/cards/SpritesCard";
 import CatchRateCard from "../components/cards/CatchRateCard";
+import { useTheme } from "@mui/material/styles";
 
 const fetchEvolutionChain = (url) => {
   if (url) {
@@ -37,6 +37,7 @@ const Pokemon = () => {
   const [pokemon, setPokemon] = useState({});
   const [species, setSpecies] = useState({});
   const [evoChain, setEvoChain] = useState([]);
+  const theme = useTheme();
 
   const [color, setColor] = useState("");
   const [loading, setLoading] = useState(true);
@@ -76,7 +77,7 @@ const Pokemon = () => {
   }, [pokemon]);
 
   return (
-    <Layout>
+    <>
       {!loading && (
         <>
           <Box
@@ -141,12 +142,23 @@ const Pokemon = () => {
                         width: "150px",
                         borderRadius: "30px",
                         marginBottom: "10px",
+                        backgroundColor:
+                          theme.palette.mode === "light" ? "#fff" : "#2d333b",
                       }}
                     >
                       <Select
                         input={<OutlinedInput placeholder="Chip" />}
-                        label="Age"
-                        MenuProps={{ PaperProps: { sx: { maxHeight: 200 } } }}
+                        MenuProps={{
+                          PaperProps: {
+                            sx: {
+                              maxHeight: 200,
+                              backgroundColor:
+                                theme.palette.mode === "light"
+                                  ? "#fff"
+                                  : "#2d333b",
+                            },
+                          },
+                        }}
                         sx={{
                           width: "100%",
                           height: "25px",
@@ -249,7 +261,7 @@ const Pokemon = () => {
           </Box>
         </>
       )}
-    </Layout>
+    </>
   );
 };
 

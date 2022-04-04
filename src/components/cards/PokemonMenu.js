@@ -16,10 +16,12 @@ import HeartBrokenIcon from "@mui/icons-material/HeartBroken";
 import useContextMenu from "../../resources/useContextMenu";
 import MenuContext from "../../resources/context/MenuContext";
 import Box from "@mui/material/Box";
+import { useTheme } from "@mui/material/styles";
 
 export default function PokemonMenu() {
   const { anchorPoint, show } = useContextMenu();
   const navigate = useNavigate();
+  const theme = useTheme();
 
   const {
     selectedPokemon,
@@ -41,6 +43,7 @@ export default function PokemonMenu() {
           top: anchorPoint.y,
           left: anchorPoint.x,
           position: "absolute",
+          backgroundColor: theme.palette.mode === "light" ? "#fff" : "#2d333b",
         }}
       >
         {selectedPokemon ? (

@@ -1,7 +1,5 @@
 import React from "react";
 // import Button from "@mui/material/Button";
-
-import Layout from "./Layout";
 import { getPokemon } from "../resources/apiHelper";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import Paper from "@mui/material/Paper";
@@ -78,7 +76,7 @@ const Game = () => {
 
   console.log(pokemon.name);
   return (
-    <Layout>
+    <>
       <canvas ref={canvasRef} />
       <Paper
         sx={{
@@ -98,7 +96,7 @@ const Game = () => {
           onChange={handleInput}
         />
       </Paper>
-    </Layout>
+    </>
   );
 };
 

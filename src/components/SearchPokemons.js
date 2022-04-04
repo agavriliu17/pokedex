@@ -10,6 +10,7 @@ import Tooltip from "@mui/material/Tooltip";
 import Button from "@mui/material/Button";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import Fade from "@mui/material/Fade";
+import { useTheme } from "@mui/material/styles";
 
 import { capitalizeFirstLetter } from "../resources/pokemonHelper";
 import { typeColors } from "../colors";
@@ -18,6 +19,7 @@ import pokeBall from "../images/pokeBall.png";
 const SearchPokemons = ({ applyFilters, filters }) => {
   const [input, setInput] = useState("");
   const [selectedTypes, setTypes] = useState("");
+  const theme = useTheme();
 
   const handleInputChange = (event) => {
     setInput(event.target.value);
@@ -50,7 +52,14 @@ const SearchPokemons = ({ applyFilters, filters }) => {
             justifyContent: "center",
           }}
         >
-          <Paper sx={{ minWidth: "300px", marginBottom: "5px" }}>
+          <Paper
+            sx={{
+              minWidth: "300px",
+              marginBottom: "5px",
+              backgroundColor:
+                theme.palette.mode === "light" ? "#fff" : "#2d333b",
+            }}
+          >
             <TextField
               placeholder="Search pokemons by name or type"
               variant="outlined"
@@ -68,7 +77,13 @@ const SearchPokemons = ({ applyFilters, filters }) => {
             }}
           >
             <Paper
-              sx={{ width: "150px", marginRight: "10px", marginBottom: "5px" }}
+              sx={{
+                width: "150px",
+                marginRight: "10px",
+                marginBottom: "5px",
+                backgroundColor:
+                  theme.palette.mode === "light" ? "#fff" : "#2d333b",
+              }}
             >
               <Select
                 displayEmpty
@@ -76,6 +91,15 @@ const SearchPokemons = ({ applyFilters, filters }) => {
                 input={<OutlinedInput placeholder="Chip" />}
                 value={selectedTypes}
                 onChange={handleChange}
+                MenuProps={{
+                  PaperProps: {
+                    sx: {
+                      maxHeight: 200,
+                      backgroundColor:
+                        theme.palette.mode === "light" ? "#fff" : "#2d333b",
+                    },
+                  },
+                }}
               >
                 <MenuItem value={""} disabled={selectedTypes === ""}>
                   Select type
