@@ -1,12 +1,10 @@
 import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import GitHubIcon from "@mui/icons-material/GitHub";
-import IconButton from "@mui/material/IconButton";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
-import Button from "@mui/material/Button";
+// import Button from "@mui/material/Button";
+import Layout from "./Layout";
 
 import { useParams } from "react-router";
 import { useEffect, useState } from "react";
@@ -78,196 +76,180 @@ const Pokemon = () => {
   }, [pokemon]);
 
   return (
-    <Paper
-      sx={{
-        width: "100%",
-        minHeight: "100vh",
-        backgroundColor: "#fff7e8",
-        display: "flex",
-        justifyContent: "center",
-      }}
-      elevation={3}
-    >
-      <Container
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        <Box
-          sx={{ display: "flex", justifyContent: "flex-end", width: "100%" }}
-        >
-          <IconButton href="https://github.com/agavriliu17/fiipractic-bytex-pokedex">
-            <GitHubIcon sx={{ color: "#000", fontSize: "40px" }} />
-          </IconButton>
-        </Box>
+    <Layout>
+      {!loading && (
+        <>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              flexWrap: "wrap",
+              justifyContent: "space-between",
+              width: "100%",
+            }}
+          >
+            <MainCard pokemon={pokemon} color={color} species={species} />
 
-        <Typography variant="h1" mt={2} mb={5}>
-          Pokedex
-        </Typography>
-        {!loading && (
-          <>
             <Box
               sx={{
                 display: "flex",
-                flexDirection: "row",
-                flexWrap: "wrap",
-                justifyContent: "space-between",
-                width: "100%",
+                flexDirection: "column",
+                margin: "25px",
               }}
             >
-              <MainCard pokemon={pokemon} color={color} species={species} />
-
               <Box
                 sx={{
+                  width: "400px",
                   display: "flex",
                   flexDirection: "column",
-                  margin: "25px",
+                  marginBottom: "20px",
                 }}
               >
                 <Box
                   sx={{
-                    width: "400px",
                     display: "flex",
-                    flexDirection: "column",
-                    marginBottom: "20px",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "space-between",
                   }}
                 >
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "row",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                    }}
-                  >
-                    <Typography
-                      variant="h5"
-                      fontFamily="monospace"
-                      fontWeight="400"
-                      mb="10px"
-                    >
-                      Description
-                    </Typography>
-                    <Box
-                      sx={{
-                        display: "flex",
-                        flexDirection: "row",
-                        alignItems: "center",
-                      }}
-                    >
-                      <Typography
-                        variant="h6"
-                        fontFamily="monospace"
-                        fontWeight="400"
-                        mb="10px"
-                      >
-                        Game:
-                      </Typography>
-                      <Paper
-                        sx={{
-                          width: "150px",
-                          borderRadius: "30px",
-                          marginBottom: "10px",
-                        }}
-                      >
-                        <Select
-                          input={<OutlinedInput placeholder="Chip" />}
-                          label="Age"
-                          MenuProps={{ PaperProps: { sx: { maxHeight: 200 } } }}
-                          sx={{
-                            width: "100%",
-                            height: "25px",
-                            borderRadius: "30px",
-                          }}
-                          value={currDesc}
-                          onChange={(ev) => setCurrDesc(ev.target.value)}
-                        >
-                          {allDescriptions.map((game, index) => (
-                            <MenuItem
-                              value={game}
-                              key={`${game.version.name}-${index}`}
-                            >
-                              {normalizeString(game.version.name)}
-                            </MenuItem>
-                          ))}
-                        </Select>
-                      </Paper>
-                    </Box>
-                  </Box>
-                  <Typography fontFamily="monospace">
-                    {currDesc.flavor_text}
-                  </Typography>
-                </Box>
-                <Box>
                   <Typography
                     variant="h5"
                     fontFamily="monospace"
                     fontWeight="400"
                     mb="10px"
                   >
-                    Stats
+                    Description
                   </Typography>
-                  <StatsCard cardColor={color} stats={pokemon.stats} />
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Typography
+                      variant="h6"
+                      fontFamily="monospace"
+                      fontWeight="400"
+                      mb="10px"
+                    >
+                      Game:
+                    </Typography>
+                    <Paper
+                      sx={{
+                        width: "150px",
+                        borderRadius: "30px",
+                        marginBottom: "10px",
+                      }}
+                    >
+                      <Select
+                        input={<OutlinedInput placeholder="Chip" />}
+                        label="Age"
+                        MenuProps={{ PaperProps: { sx: { maxHeight: 200 } } }}
+                        sx={{
+                          width: "100%",
+                          height: "25px",
+                          borderRadius: "30px",
+                        }}
+                        value={currDesc}
+                        onChange={(ev) => setCurrDesc(ev.target.value)}
+                      >
+                        {allDescriptions.map((game, index) => (
+                          <MenuItem
+                            value={game}
+                            key={`${game.version.name}-${index}`}
+                          >
+                            {normalizeString(game.version.name)}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </Paper>
+                  </Box>
                 </Box>
+                <Typography fontFamily="monospace">
+                  {currDesc.flavor_text}
+                </Typography>
+              </Box>
+              <Box>
+                <Typography
+                  variant="h5"
+                  fontFamily="monospace"
+                  fontWeight="400"
+                  mb="10px"
+                >
+                  Stats
+                </Typography>
+                <StatsCard cardColor={color} stats={pokemon.stats} />
               </Box>
             </Box>
-            <Box sx={{ margin: "25px 50px", width: "100%" }}>
+          </Box>
+          <Box sx={{ margin: "25px 50px", width: "100%" }}>
+            <Typography
+              variant="h5"
+              fontFamily="monospace"
+              fontWeight="400"
+              mb="15px"
+              mt="15px"
+              ml="25px"
+            >
+              Evolutions
+            </Typography>
+            {evoChain.map((evolution, index) => (
+              <EvolutionsCard
+                color={color}
+                evolutions={evolution}
+                key={index}
+              />
+            ))}
+          </Box>
+          <Box
+            sx={{
+              marginBottom: "25px",
+              display: "flex",
+              flexDirection: "row",
+            }}
+          >
+            <Box
+              sx={{ display: "flex", flexDirection: "column", margin: "25px" }}
+            >
+              <Typography
+                fontFamily="monospace"
+                fontWeight="400"
+                fontSize="24px"
+                mb="15px"
+                mt="15px"
+              >
+                Catch Rate Calculator
+              </Typography>
+              <CatchRateCard
+                cardColor={color}
+                catchRate={species.capture_rate}
+                pokemonHealth={pokemon.stats[0].base_stat}
+              />
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                margin: "25px",
+              }}
+            >
               <Typography
                 variant="h5"
                 fontFamily="monospace"
                 fontWeight="400"
                 mb="15px"
                 mt="15px"
-                ml="25px"
               >
-                Evolutions
+                Sprites
               </Typography>
-              {evoChain.map((evolution, index) => (
-                <EvolutionsCard
-                  color={color}
-                  evolutions={evolution}
-                  key={index}
-                />
-              ))}
+              <SpritesCard color={color} pokemon={pokemon} />
             </Box>
-            <Box
-              sx={{
-                marginTop: "25px",
-                marginBottom: "25px",
-                display: "flex",
-                flexDirection: "row",
-              }}
-            >
-              <CatchRateCard
-                cardColor={color}
-                catchRate={species.capture_rate}
-                pokemonHealth={pokemon.stats[0].base_stat}
-              />
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  margin: "25px",
-                }}
-              >
-                <Typography
-                  variant="h5"
-                  fontFamily="monospace"
-                  fontWeight="400"
-                  mb="15px"
-                  mt="15px"
-                >
-                  Sprites
-                </Typography>
-                <SpritesCard color={color} pokemon={pokemon} />
-              </Box>
-            </Box>
-          </>
-        )}
-      </Container>
-    </Paper>
+          </Box>
+        </>
+      )}
+    </Layout>
   );
 };
 

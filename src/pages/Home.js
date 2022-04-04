@@ -1,13 +1,10 @@
 import { useState, useEffect, useContext } from "react";
 
-import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import GitHubIcon from "@mui/icons-material/GitHub";
-import IconButton from "@mui/material/IconButton";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import MenuContext from "../resources/context/MenuContext";
+import Layout from "./Layout";
 
 import Box from "@mui/material/Box";
 
@@ -77,83 +74,55 @@ function Home() {
   });
 
   return (
-    <Paper
-      sx={{
-        width: "100%",
-        minHeight: "100vh",
-        backgroundColor: "#fff7e8",
-        display: "flex",
-        justifyContent: "center",
-      }}
-      elevation={3}
-    >
-      <Container
+    <Layout>
+      <SearchPokemons applyFilters={applyFilters} filters={filters} />
+
+      <Tabs
+        value={value}
+        onChange={handleChange}
+        aria-label="basic tabs example"
+      >
+        <Tab label="All Pokemons" sx={{ textTransform: "none" }} />
+        <Tab label="Favorites" sx={{ textTransform: "none" }} />
+      </Tabs>
+      <Box
         sx={{
-          display: "flex",
-          flexDirection: "column",
           alignItems: "center",
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "center",
+          padding: "20px",
         }}
       >
-        <Box
-          sx={{ display: "flex", justifyContent: "flex-end", width: "100%" }}
-        >
-          <IconButton href="https://github.com/agavriliu17/fiipractic-bytex-pokedex">
-            <GitHubIcon sx={{ color: "#000", fontSize: "40px" }} />
-          </IconButton>
-        </Box>
-
-        <Typography variant="h1" mt={2} mb={5}>
-          Pokedex
-        </Typography>
-        <SearchPokemons applyFilters={applyFilters} filters={filters} />
-
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          aria-label="basic tabs example"
-        >
-          <Tab label="All Pokemons" sx={{ textTransform: "none" }} />
-          <Tab label="Favorites" sx={{ textTransform: "none" }} />
-        </Tabs>
-        <Box
-          sx={{
-            alignItems: "center",
-            display: "flex",
-            flexWrap: "wrap",
-            justifyContent: "center",
-            padding: "20px",
-          }}
-        >
-          {value === 0 ? (
-            <>
-              {loading ? (
-                [...Array(9)].map((el, ind) => <LoadingCard key={ind} />)
-              ) : (
-                <>
-                  {pokemons.length !== 0 ? (
-                    pokemons.map((pokemon, index) => (
-                      <PreviewCard
-                        pokemon={pokemon}
-                        key={`${pokemon.id}-${index}`}
-                      />
-                    ))
-                  ) : (
-                    <UnknownPokemon />
-                  )}
-                </>
-              )}
-            </>
-          ) : favoritePokemons.length !== 0 ? (
-            favoritePokemons.map((fav, index) => (
-              <PreviewCard pokemon={fav} key={`${fav.id}-${index}`} />
-            ))
-          ) : (
-            <Typography>No pokemons</Typography>
-          )}
-        </Box>
-        <PokemonMenu />
-      </Container>
-    </Paper>
+        {value === 0 ? (
+          <>
+            {loading ? (
+              [...Array(9)].map((el, ind) => <LoadingCard key={ind} />)
+            ) : (
+              <>
+                {pokemons.length !== 0 ? (
+                  pokemons.map((pokemon, index) => (
+                    <PreviewCard
+                      pokemon={pokemon}
+                      key={`${pokemon.id}-${index}`}
+                    />
+                  ))
+                ) : (
+                  <UnknownPokemon />
+                )}
+              </>
+            )}
+          </>
+        ) : favoritePokemons.length !== 0 ? (
+          favoritePokemons.map((fav, index) => (
+            <PreviewCard pokemon={fav} key={`${fav.id}-${index}`} />
+          ))
+        ) : (
+          <Typography>No pokemons</Typography>
+        )}
+      </Box>
+      <PokemonMenu />
+    </Layout>
   );
 }
 

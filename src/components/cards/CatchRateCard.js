@@ -10,6 +10,7 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import CircularProgress from "@mui/material/CircularProgress";
+import Paper from "@mui/material/Paper";
 
 import Button from "@mui/material/Button";
 
@@ -86,18 +87,10 @@ const CatchRateCard = ({ cardColor, catchRate, pokemonHealth }) => {
         minHeight: "400px",
         backgroundColor: cardColor,
         padding: "20px",
-        margin: "25px",
         borderRadius: "15px",
+        justifyContent: "space-between",
       }}
     >
-      <Typography
-        fontFamily="monospace"
-        fontWeight="400"
-        mb="25px"
-        fontSize="24px"
-      >
-        Catch Rate Calculator
-      </Typography>
       {!calculated ? (
         <>
           <Box
@@ -112,27 +105,39 @@ const CatchRateCard = ({ cardColor, catchRate, pokemonHealth }) => {
               fontWeight="400"
               mr="10px"
               fontSize="20px"
+              mb="5px"
             >
               Pokemon status:
             </Typography>
-            <Select
-              input={<OutlinedInput placeholder="Chip" />}
-              label="Age"
-              MenuProps={{ PaperProps: { sx: { maxHeight: 200 } } }}
+            <Paper
               sx={{
                 width: "250px",
-                height: "25px",
                 borderRadius: "30px",
+                height: "35px",
               }}
-              value={form.status}
-              onChange={(ev) => handleInputUpdate(ev, "status")}
             >
-              {pokemonStatus.map((statusOption, index) => (
-                <MenuItem key={`${statusOption}-${index}`} value={statusOption}>
-                  {statusOption}
-                </MenuItem>
-              ))}
-            </Select>
+              <Select
+                input={<OutlinedInput placeholder="Chip" />}
+                label="Age"
+                MenuProps={{ PaperProps: { sx: { maxHeight: 200 } } }}
+                sx={{
+                  width: "250px",
+                  height: "35px",
+                  borderRadius: "30px",
+                }}
+                value={form.status}
+                onChange={(ev) => handleInputUpdate(ev, "status")}
+              >
+                {pokemonStatus.map((statusOption, index) => (
+                  <MenuItem
+                    key={`${statusOption}-${index}`}
+                    value={statusOption}
+                  >
+                    {statusOption}
+                  </MenuItem>
+                ))}
+              </Select>
+            </Paper>
           </Box>
           <Box
             sx={{
@@ -146,21 +151,30 @@ const CatchRateCard = ({ cardColor, catchRate, pokemonHealth }) => {
               fontFamily="monospace"
               fontWeight="400"
               mr="10px"
+              mb="5px"
               fontSize="20px"
             >
               Current Health:
             </Typography>
-            <OutlinedInput
-              type="number"
-              inputProps={{ min: "0", max: "100", step: "5" }}
+            <Paper
               sx={{
                 width: "250px",
-                height: "25px",
                 borderRadius: "30px",
+                height: "35px",
               }}
-              value={form.health}
-              onChange={(ev) => handleInputUpdate(ev, "health")}
-            />
+            >
+              <OutlinedInput
+                type="number"
+                inputProps={{ min: "0", max: "100", step: "5" }}
+                sx={{
+                  width: "250px",
+                  height: "35px",
+                  borderRadius: "30px",
+                }}
+                value={form.health}
+                onChange={(ev) => handleInputUpdate(ev, "health")}
+              />
+            </Paper>
           </Box>
           <Box
             sx={{
@@ -175,6 +189,7 @@ const CatchRateCard = ({ cardColor, catchRate, pokemonHealth }) => {
               fontWeight="400"
               mr="10px"
               fontSize="20px"
+              mb="5px"
             >
               Select your pokeball:
             </Typography>
