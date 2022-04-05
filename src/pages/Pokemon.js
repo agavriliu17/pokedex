@@ -25,6 +25,9 @@ import SpritesCard from "../components/cards/SpritesCard";
 import CatchRateCard from "../components/cards/CatchRateCard";
 import { useTheme } from "@mui/material/styles";
 
+import LoadingStatsCard from "../components/loadingElements/LoadingStatsCard";
+import LoadingDescription from "../components/loadingElements/LoadingDescription";
+
 const fetchEvolutionChain = (url) => {
   if (url) {
     return axios.get(url);
@@ -179,9 +182,13 @@ const Pokemon = () => {
                     </Paper>
                   </Box>
                 </Box>
-                <Typography fontFamily="monospace">
-                  {currDesc.flavor_text}
-                </Typography>
+                {loading ? (
+                  <LoadingDescription />
+                ) : (
+                  <Typography fontFamily="monospace">
+                    {currDesc.flavor_text}
+                  </Typography>
+                )}
               </Box>
               <Box>
                 <Typography
@@ -192,7 +199,11 @@ const Pokemon = () => {
                 >
                   Stats
                 </Typography>
-                <StatsCard cardColor={color} stats={pokemon.stats} />
+                {loading ? (
+                  <LoadingStatsCard />
+                ) : (
+                  <StatsCard cardColor={color} stats={pokemon.stats} />
+                )}
               </Box>
             </Box>
           </Box>

@@ -12,7 +12,7 @@ import pokemonsData from "../data.json";
 import UnknownPokemon from "../components/cards/UnknownPokemon";
 import SearchPokemons from "../components/SearchPokemons";
 import PreviewCard from "../components/cards/PreviewCard";
-import LoadingCard from "../components/cards/LoadingCard";
+import LoadingPreviewCard from "../components/loadingElements/LoadingPreviewCard";
 
 import PokemonMenu from "../components/cards/PokemonMenu";
 
@@ -96,9 +96,10 @@ function Home() {
         {value === 0 ? (
           <>
             {loading ? (
-              [...Array(9)].map((el, ind) => <LoadingCard key={ind} />)
+              [...Array(9)].map((el, ind) => <LoadingPreviewCard key={ind} />)
             ) : (
               <>
+                <LoadingPreviewCard />
                 {pokemons.length !== 0 ? (
                   pokemons.map((pokemon, index) => (
                     <PreviewCard

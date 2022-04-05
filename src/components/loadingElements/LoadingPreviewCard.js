@@ -1,7 +1,9 @@
 import Box from "@mui/material/Box";
 import Skeleton from "@mui/material/Skeleton";
+import { useTheme } from "@mui/material/styles";
 
-const LoadingCard = () => {
+const LoadingPreviewCard = () => {
+  const theme = useTheme();
   return (
     <Box
       sx={{
@@ -12,8 +14,9 @@ const LoadingCard = () => {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#D3D3D3",
+        backgroundColor: theme.palette.loading,
         borderRadius: "15px",
+        boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2)",
       }}
     >
       <Skeleton width="225px" height="25px" sx={{ marginBottom: "20px" }} />
@@ -35,4 +38,4 @@ const LoadingCard = () => {
   );
 };
 
-export default LoadingCard;
+export default LoadingPreviewCard;

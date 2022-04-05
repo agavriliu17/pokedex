@@ -3,23 +3,21 @@ import React from "react";
 import Card from "@mui/material/Card";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Tooltip from "@mui/material/Tooltip";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import CircularProgress from "@mui/material/CircularProgress";
 import Paper from "@mui/material/Paper";
 import { useTheme } from "@mui/material/styles";
+import Link from "@mui/material/Link";
 
 import Button from "@mui/material/Button";
 
 import pokeball from "../../images/pokeballs/Simple-pokeball.png";
 import greatball from "../../images/pokeballs/Great-ball.png";
 import masterball from "../../images/pokeballs/Master-ball.png";
-import InfoIcon from "@mui/icons-material/Info";
-
+import CustomCircularProgress from "../CustomLoading";
 const pokemonStatus = [
   "Normal",
   "Poisoned",
@@ -50,7 +48,7 @@ const CatchRateCard = ({ cardColor, catchRate, pokemonHealth }) => {
   const [form, setForm] = React.useState({
     status: "Normal",
     health: 100,
-    pokeball: "",
+    pokeball: "pokeball",
   });
   const theme = useTheme();
 
@@ -63,7 +61,6 @@ const CatchRateCard = ({ cardColor, catchRate, pokemonHealth }) => {
   };
 
   const calculateCatchRate = () => {
-    //TODO: Validate data
     const p0 = statusAilment[form.status] / (ballMod[form.pokeball] + 1);
 
     const f =
@@ -77,6 +74,27 @@ const CatchRateCard = ({ cardColor, catchRate, pokemonHealth }) => {
     setCalculated(true);
     const rate = Math.floor(p0 + p1);
     setCatchPercentage(Math.min(rate, 100));
+  };
+
+  //Will return the number of pokeballs needed to catch
+  const calculatePokeballs = (rate) => {
+    if (rate > 95) return " success chance per ball is pretty high.";
+    else if (rate > 50) {
+      const pokeballs = 95 / rate + 1;
+
+      return `You have a 95% chance of catching it within ${Math.ceil(
+        pokeballs
+      )} balls.`;
+    } else {
+      const pokeballs50 = 50 / rate;
+      const pokeballs95 = 95 / rate;
+
+      return `Thus, you have at least a 50% chance of catching it within ${Math.ceil(
+        pokeballs50
+      )} balls and at least a 95% chance of catching it within ${Math.ceil(
+        pokeballs95
+      )} balls.`;
+    }
   };
 
   return (
@@ -279,27 +297,27 @@ const CatchRateCard = ({ cardColor, catchRate, pokemonHealth }) => {
             width: "100%",
           }}
         >
-          <Box
-            sx={{
-              width: "100%",
-              display: "flex",
-              justifyContent: "flex-end",
-              marginBottom: "20px",
-            }}
-          >
-            <Tooltip title={"learn more"}>
-              <InfoIcon />
-            </Tooltip>
-          </Box>
           <Typography
             fontFamily="monospace"
             fontWeight="400"
             mr="10px"
             fontSize="20px"
+            mb="15px"
           >
             {`Success rate: ${catchPercentage}%`}
           </Typography>
-          <CircularProgress value={catchPercentage} variant="determinate" />
+
+          <CustomCircularProgress value={catchPercentage} />
+          <Typography
+            fontFamily="monospace"
+            fontWeight="400"
+            mr="10px"
+            fontSize="18px"
+            mt="15px"
+            align="center"
+          >
+            {calculatePokeballs(catchPercentage)}
+          </Typography>
           <Button
             variant="contained"
             sx={{ marginTop: "20px" }}
@@ -307,6 +325,26 @@ const CatchRateCard = ({ cardColor, catchRate, pokemonHealth }) => {
           >
             Calculate again
           </Button>
+          <Typography
+            fontFamily="monospace"
+            fontWeight="400"
+            mr="10px"
+            fontSize="14px"
+            mt="15px"
+            align="center"
+          >
+            If you want to learn more about the exact additions way of
+            calculating,{" "}
+            <Link
+              href="https://bulbapedia.bulbagarden.net/wiki/Catch_rate"
+              fontFamily="monospace"
+              fontWeight="700"
+              color="inherit"
+            >
+              click here
+            </Link>
+            .
+          </Typography>
         </Box>
       )}
     </Card>
