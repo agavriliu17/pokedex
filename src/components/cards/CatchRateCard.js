@@ -78,7 +78,7 @@ const CatchRateCard = ({ cardColor, catchRate, pokemonHealth }) => {
 
   //Will return the number of pokeballs needed to catch
   const calculatePokeballs = (rate) => {
-    if (rate > 95) return " success chance per ball is pretty high.";
+    if (rate > 95) return "Success chance per ball is pretty high.";
     else if (rate > 50) {
       const pokeballs = 95 / rate + 1;
 
@@ -104,7 +104,7 @@ const CatchRateCard = ({ cardColor, catchRate, pokemonHealth }) => {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        minWidth: "300px",
+        width: "300px",
         minHeight: "400px",
         backgroundColor: cardColor,
         padding: "20px",
@@ -294,7 +294,7 @@ const CatchRateCard = ({ cardColor, catchRate, pokemonHealth }) => {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            width: "100%",
+            width: "300px",
           }}
         >
           <Typography

@@ -1,21 +1,21 @@
 import React from "react";
 
+import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import Typography from "@mui/material/Typography";
-
-import Box from "@mui/material/Box";
-import { Link } from "react-router-dom";
-
-import { useNavigate } from "react-router-dom";
 import PokemonType from "../PokemonType";
 
 import {
   capitalizeFirstLetter,
   formatNumber,
 } from "../../resources/pokemonHelper";
+import { typeColors } from "../../colors";
+import { useNavigate } from "react-router-dom";
 
 const EvolutionsCard = ({ color, evolutions }) => {
   const navigate = useNavigate();
+
+  const hoverColor = typeColors.hover[evolutions[0].types[0].type.name];
 
   return (
     <Card
@@ -34,19 +34,22 @@ const EvolutionsCard = ({ color, evolutions }) => {
       }}
     >
       {evolutions.map((evo, index) => (
-        // <Link to={`/pokemon/${evo.id}`} id={evo.id}>
         <Box
           key={index}
           sx={{
             display: "flex",
             flexDirection: "column",
             alignContent: "center",
-            // "&:hover": {
-            //   cursor: "grab",
-            // },
+            padding: "15px",
+            borderRadius: "15px",
             margin: "10px",
+            transition: "background 0.3s, color 0.3s",
+            "&:hover": {
+              backgroundColor: hoverColor,
+              cursor: "pointer",
+            },
           }}
-          // onClick={() => navigate(`/pokemon/${evo.id}`)}
+          onClick={() => navigate(`/pokemon/${evo.id}`)}
         >
           <Typography
             fontFamily="monospace"
@@ -56,7 +59,7 @@ const EvolutionsCard = ({ color, evolutions }) => {
           >
             {capitalizeFirstLetter(evo.name)}
           </Typography>
-          <Typography fontFamily="monospace" fontWeight="400" align="center">
+          <Typography fontFamily="monospace" fontWeight="500" align="center">
             {formatNumber(evo.id)}
           </Typography>
           <Box sx={{ display: "flex", justifyContent: "center" }}>
@@ -67,7 +70,13 @@ const EvolutionsCard = ({ color, evolutions }) => {
               width="150px"
             />
           </Box>
-          <Box sx={{ display: "flex", flexDirection: "row" }}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+            }}
+          >
             {evo.types.map((pokemon, index) => (
               <PokemonType
                 type={pokemon.type.name}
@@ -76,7 +85,6 @@ const EvolutionsCard = ({ color, evolutions }) => {
             ))}
           </Box>
         </Box>
-        // </Link>
       ))}
     </Card>
   );

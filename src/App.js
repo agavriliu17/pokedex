@@ -5,6 +5,8 @@ import Pokemon from "./pages/Pokemon.js";
 import Home from "./pages/Home";
 import Game from "./pages/Game.js";
 import GamePresentation from "./components/game/GamePresentation.js";
+import useMediaQuery from "@mui/material/useMediaQuery";
+
 import NotFound from "./pages/NotFound";
 import Layout from "./pages/Layout.js";
 
@@ -16,7 +18,8 @@ export const ColorModeContext = React.createContext({
 });
 
 const App = () => {
-  const [mode, setMode] = React.useState("light");
+  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
+  const [mode, setMode] = React.useState(prefersDarkMode ? "dark" : "light");
   const colorMode = React.useMemo(
     () => ({
       // The dark mode switch would invoke this method

@@ -21,7 +21,7 @@ function Sprite({ title, imgSource }) {
       >
         {title}
       </Typography>
-      <img src={imgSource} alt="Pokemon" height="200px" width="200px" />
+      <img src={imgSource} alt="Pokemon" height="150px" width="150px" />
     </Box>
   );
 }

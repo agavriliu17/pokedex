@@ -101,6 +101,7 @@ const MainCard = ({ pokemon, color, species }) => {
           justifyContent: "space-evenly",
           width: "100%",
           marginBottom: "20px",
+          flexWrap: "wrap",
         }}
       >
         <InfoBlock title="Weight" content={`${pokemon.weight / 10} kg`} />

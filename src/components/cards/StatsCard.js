@@ -44,6 +44,12 @@ const StatsCard = ({ cardColor, stats }) => {
         backgroundColor: cardColor,
         padding: "20px",
         borderRadius: "15px",
+        "@media (max-width: 550px)": {
+          width: "300px",
+        },
+        "@media (max-width: 400px)": {
+          width: "250px",
+        },
       }}
     >
       {stats.map((stat, index) => (
@@ -52,12 +58,12 @@ const StatsCard = ({ cardColor, stats }) => {
           key={index}
         >
           <Grid container spacing={3} alignItems="center">
-            <Grid item xs={5}>
+            <Grid item xs={8} md={5}>
               <Typography mr="5px" fontFamily="monospace">
                 {normalizeString(stat.stat.name)}
               </Typography>
             </Grid>
-            <Grid item xs={7}>
+            <Grid item xs={4} md={7}>
               <Tooltip title={stat.base_stat} placement="right">
                 <Box sx={{ width: "100%" }}>
                   <BorderLinearProgress

@@ -9,7 +9,6 @@ const LoadingStatsCard = () => {
       sx={{
         width: "400px",
         height: "150px",
-        margin: "20px",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
