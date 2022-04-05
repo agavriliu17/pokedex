@@ -8,7 +8,6 @@ import MenuContext from "../resources/context/MenuContext";
 import Box from "@mui/material/Box";
 
 import { getPokemons } from "../resources/apiHelper";
-import pokemonsData from "../data.json";
 import UnknownPokemon from "../components/cards/UnknownPokemon";
 import SearchPokemons from "../components/SearchPokemons";
 import PreviewCard from "../components/cards/PreviewCard";
@@ -54,7 +53,7 @@ function Home() {
     return false;
   };
 
-  const filteredPokemons = pokemonsData.filter((pokemon) => {
+  const filteredPokemons = pokemons.filter((pokemon) => {
     if (filters.name === "" && filters.type === "") {
       return pokemon;
     } else if (filters.name !== "") {
@@ -99,9 +98,8 @@ function Home() {
               [...Array(9)].map((el, ind) => <LoadingPreviewCard key={ind} />)
             ) : (
               <>
-                <LoadingPreviewCard />
-                {pokemons.length !== 0 ? (
-                  pokemons.map((pokemon, index) => (
+                {filteredPokemons.length !== 0 ? (
+                  filteredPokemons.map((pokemon, index) => (
                     <PreviewCard
                       pokemon={pokemon}
                       key={`${pokemon.id}-${index}`}
@@ -118,7 +116,28 @@ function Home() {
             <PreviewCard pokemon={fav} key={`${fav.id}-${index}`} />
           ))
         ) : (
-          <Typography>No pokemons</Typography>
+          <>
+            <Typography
+              fontFamily="monospace"
+              fontWeight="400"
+              align="center"
+              fontSize="25px"
+            >
+              Seems like you don't have any favorite pokemons yet.
+            </Typography>
+            <Typography
+              fontFamily="monospace"
+              fontWeight="400"
+              align="center"
+              fontSize="20px"
+              mt={3}
+            >
+              If you want to save them here, you can click on the heart icon in
+              the pokemon's details page, or while on the home page right-click
+              on the pokemon to open an special menu and you'll see the add to
+              favorites option.
+            </Typography>
+          </>
         )}
       </Box>
       <PokemonMenu />
