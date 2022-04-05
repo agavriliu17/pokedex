@@ -1,14 +1,14 @@
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-// import GitHubIcon from "@mui/icons-material/GitHub";
-// import IconButton from "@mui/material/IconButton";
 import Button from "@mui/material/Button";
-import { useNavigate, useLocation } from "react-router-dom";
-import { useTheme } from "@mui/material/styles";
-
-import SwitchMode from "../components/SwitchMode";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
+
+import SwitchMode from "../components/SwitchMode";
+import Footer from "./Footer";
+
+import { useNavigate, useLocation } from "react-router-dom";
+import { useTheme } from "@mui/material/styles";
 
 const Layout = ({ children }) => {
   const theme = useTheme();
@@ -24,7 +24,8 @@ const Layout = ({ children }) => {
         minHeight: "100vh",
         backgroundColor: theme.palette.background,
         display: "flex",
-        justifyContent: "center",
+        justifyContent: "space-between",
+        flexDirection: "column",
       }}
       elevation={3}
     >
@@ -83,6 +84,7 @@ const Layout = ({ children }) => {
         </Button>
         {children}
       </Container>
+      <Footer />
     </Paper>
   );
 };
