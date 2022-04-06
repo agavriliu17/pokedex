@@ -5,7 +5,7 @@ import CircularProgress, {
 } from "@mui/material/CircularProgress";
 
 // Inspired by the former Facebook spinners.
-function CustomCircularProgress({ value }) {
+function CustomCircularProgress({ value, size = 70, thickness = 5 }) {
   return (
     <Box sx={{ position: "relative" }}>
       <CircularProgress
@@ -14,12 +14,12 @@ function CustomCircularProgress({ value }) {
           color: (theme) =>
             theme.palette.grey[theme.palette.mode === "light" ? 200 : 800],
         }}
-        size={70}
-        thickness={5}
+        size={size}
+        thickness={thickness}
         value={100}
       />
       <CircularProgress
-        variant="determinate"
+        variant={value ? "determinate" : "indeterminate"}
         value={value}
         disableShrink
         sx={{
@@ -32,8 +32,8 @@ function CustomCircularProgress({ value }) {
             strokeLinecap: "round",
           },
         }}
-        size={70}
-        thickness={5}
+        size={size}
+        thickness={thickness}
       />
     </Box>
   );

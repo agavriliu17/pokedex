@@ -64,6 +64,7 @@ const GamePresentation = () => {
           marginBottom: "20px",
           marginTop: "20px",
         }}
+        color="success"
       >
         Easy mode
       </Button>
@@ -71,6 +72,7 @@ const GamePresentation = () => {
         variant="contained"
         onClick={() => navigate(`/game/hard`)}
         sx={{ textTransform: "none", width: "200px" }}
+        color="error"
       >
         Hard mode
       </Button>

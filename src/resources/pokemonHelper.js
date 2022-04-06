@@ -64,3 +64,5 @@ export const normalizeString = (string) => {
     return normalizedWord.slice(0, -1);
   } else return capitalizeFirstLetter(string);
 };
+
+export const getRandomPokemon = () => Math.floor(Math.random() * 898);

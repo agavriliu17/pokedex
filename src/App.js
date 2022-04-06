@@ -3,8 +3,9 @@ import React from "react";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import Pokemon from "./pages/Pokemon.js";
 import Home from "./pages/Home";
-import Game from "./pages/Game.js";
-import GamePresentation from "./components/game/GamePresentation.js";
+import EasyGame from "./pages/game/EasyGame";
+import HardGame from "./pages/game/HardGame.js";
+import GamePresentation from "./pages/game/GamePresentation.js";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 import NotFound from "./pages/NotFound";
@@ -42,8 +43,8 @@ const App = () => {
               <Route path="/" element={<Home />} />
               <Route path="pokemon/:pokemonId" element={<Pokemon />} />
               <Route path="game" element={<GamePresentation />} />
-              <Route path="game/easy" element={<Game />} />
-              <Route path="game/hard" element={<Game />} />
+              <Route path="game/easy" element={<EasyGame />} />
+              <Route path="game/hard" element={<HardGame />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Layout>
