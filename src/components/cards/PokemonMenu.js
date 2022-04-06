@@ -13,7 +13,7 @@ import InfoIcon from "@mui/icons-material/Info";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import HeartBrokenIcon from "@mui/icons-material/HeartBroken";
 
-import useContextMenu from "../../resources/useContextMenu";
+import useContextMenu from "../../resources/hooks/useContextMenu";
 import MenuContext from "../../resources/context/MenuContext";
 import Box from "@mui/material/Box";
 import { useTheme } from "@mui/material/styles";

@@ -1,32 +1,37 @@
-import { useState, useEffect, useContext } from "react";
+import React from "react";
 
 import Typography from "@mui/material/Typography";
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import Tooltip from "@mui/material/Tooltip";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import MenuContext from "../resources/context/MenuContext";
-
 import Box from "@mui/material/Box";
+import Fab from "@mui/material/Fab";
+import Grow from "@mui/material/Grow";
 
-import { getPokemons } from "../resources/apiHelper";
+import LoadingPreviewCard from "../components/loadingElements/LoadingPreviewCard";
 import UnknownPokemon from "../components/cards/UnknownPokemon";
+import PokemonMenu from "../components/cards/PokemonMenu";
 import SearchPokemons from "../components/SearchPokemons";
 import PreviewCard from "../components/cards/PreviewCard";
-import LoadingPreviewCard from "../components/loadingElements/LoadingPreviewCard";
 
-import PokemonMenu from "../components/cards/PokemonMenu";
+import MenuContext from "../resources/context/MenuContext";
+import { getPokemons } from "../resources/apiHelper";
+import { useScrollToTop } from "../resources/hooks/useScrollToTop";
 
 function Home() {
-  const [pokemons, setPokemons] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [filters, setFilters] = useState({ name: "", type: "" });
-  const [value, setValue] = useState(0);
-  const { favoritePokemons } = useContext(MenuContext);
+  const [pokemons, setPokemons] = React.useState([]);
+  const [loading, setLoading] = React.useState(true);
+  const [filters, setFilters] = React.useState({ name: "", type: "" });
+  const [value, setValue] = React.useState(0);
+  const { favoritePokemons } = React.useContext(MenuContext);
+  const { isVisible, scrollToTop } = useScrollToTop();
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  useEffect(() => {
+  React.useEffect(() => {
     (async function () {
       try {
         const data = await getPokemons();
@@ -141,6 +146,35 @@ function Home() {
         )}
       </Box>
       <PokemonMenu />
+      {isVisible && (
+        <Tooltip title="Scroll to top">
+          <Grow
+            in={isVisible}
+            unmountOnExit
+            timeout={500}
+            //TODO: Add exit animation
+            easing={{
+              exit: "cubic-bezier(0, 1.5, .8, 1)",
+            }}
+          >
+            <Fab
+              color="primary"
+              aria-label="add"
+              sx={{
+                margin: 0,
+                top: "auto",
+                right: 50,
+                bottom: 50,
+                left: "auto",
+                position: "fixed",
+              }}
+              onClick={scrollToTop}
+            >
+              <ArrowUpwardIcon />
+            </Fab>
+          </Grow>
+        </Tooltip>
+      )}
     </>
   );
 }
