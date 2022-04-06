@@ -147,33 +147,35 @@ function Home() {
       </Box>
       <PokemonMenu />
       {isVisible && (
-        <Tooltip title="Scroll to top">
-          <Grow
-            in={isVisible}
-            unmountOnExit
-            timeout={500}
-            //TODO: Add exit animation
-            easing={{
-              exit: "cubic-bezier(0, 1.5, .8, 1)",
-            }}
-          >
-            <Fab
-              color="primary"
-              aria-label="add"
-              sx={{
-                margin: 0,
-                top: "auto",
-                right: 50,
-                bottom: 50,
-                left: "auto",
-                position: "fixed",
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "flex-end",
+            width: "100%",
+            position: "sticky",
+            margin: 0,
+            top: "auto",
+            right: 50,
+            bottom: 50,
+            left: "auto",
+          }}
+        >
+          <Tooltip title="Scroll to top">
+            <Grow
+              in={isVisible}
+              unmountOnExit
+              timeout={500}
+              //TODO: Add exit animation
+              easing={{
+                exit: "cubic-bezier(0, 1.5, .8, 1)",
               }}
-              onClick={scrollToTop}
             >
-              <ArrowUpwardIcon />
-            </Fab>
-          </Grow>
-        </Tooltip>
+              <Fab color="primary" onClick={scrollToTop}>
+                <ArrowUpwardIcon />
+              </Fab>
+            </Grow>
+          </Tooltip>
+        </Box>
       )}
     </>
   );

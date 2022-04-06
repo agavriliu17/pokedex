@@ -5,12 +5,10 @@ import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import OutlinedInput from "@mui/material/OutlinedInput";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 import CustomCircularProgress from "../../components/CustomLoading";
 
 import { getPokemon } from "../../resources/apiHelper";
-import { useNavigate } from "react-router-dom";
 
 const easyPokemons = [
   9, 143, 7, 1, 4, 13, 6, 19, 25, 41, 52, 133, 94, 150, 129,
@@ -24,8 +22,6 @@ const EasyGame = () => {
   const [highScore, setHighScore] = React.useState(0);
   const [loading, setLoading] = React.useState(true);
   const [input, setInput] = React.useState("");
-
-  const navigate = useNavigate();
 
   const handleInput = (e) => {
     setInput(e.target.value);
@@ -89,22 +85,18 @@ const EasyGame = () => {
           display: "flex",
           flexDirection: "row",
           alignItems: "center",
-          justifyContent: "space-between",
+          justifyContent: "flex-end",
           width: "100%",
         }}
       >
-        <Button
-          variant="contained"
-          sx={{ textTransform: "none" }}
-          startIcon={<ArrowBackIcon />}
-          onClick={() => navigate("/game")}
-        >
-          Back
-        </Button>
         <Box>
-          <Typography fontFamily="monospace">HighScore:{highScore}</Typography>
+          <Typography fontFamily="monospace" fontSize="25px">
+            HighScore:{highScore}
+          </Typography>
 
-          <Typography fontFamily="monospace">Score:{score}</Typography>
+          <Typography fontFamily="monospace" fontSize="20px">
+            Score:{score}
+          </Typography>
         </Box>
       </Box>
       {loading ? (

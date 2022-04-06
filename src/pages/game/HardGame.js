@@ -1,15 +1,12 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import OutlinedInput from "@mui/material/OutlinedInput";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 import CustomCircularProgress from "../../components/CustomLoading";
 import { getPokemon } from "../../resources/apiHelper";
 import { getRandomPokemon } from "../../resources/pokemonHelper";
-import { useNavigate } from "react-router-dom";
 
 const HardGame = () => {
   const [pokemon, setPokemon] = React.useState({});
@@ -18,8 +15,6 @@ const HardGame = () => {
   const [loading, setLoading] = React.useState(true);
   const [input, setInput] = React.useState("");
   const canvasRef = React.useRef(null);
-
-  const navigate = useNavigate();
 
   React.useEffect(() => {
     const lastHighScore = localStorage.getItem("highScore_hard");
@@ -117,7 +112,6 @@ const HardGame = () => {
     setInput("");
   };
 
-  // console.log(pokemon.name);
   return (
     <>
       <Box
@@ -125,22 +119,18 @@ const HardGame = () => {
           display: "flex",
           flexDirection: "row",
           alignItems: "center",
-          justifyContent: "space-between",
+          justifyContent: "flex-end",
           width: "100%",
         }}
       >
-        <Button
-          variant="contained"
-          sx={{ textTransform: "none" }}
-          startIcon={<ArrowBackIcon />}
-          onClick={() => navigate("/game")}
-        >
-          Back
-        </Button>
         <Box>
-          <Typography fontFamily="monospace">HighScore:{highScore}</Typography>
+          <Typography fontFamily="monospace" fontSize="25px">
+            HighScore:{highScore}
+          </Typography>
 
-          <Typography fontFamily="monospace">Score:{score}</Typography>
+          <Typography fontFamily="monospace" fontSize="20px">
+            Score:{score}
+          </Typography>
         </Box>
       </Box>
       {loading && (

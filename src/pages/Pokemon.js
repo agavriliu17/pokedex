@@ -5,13 +5,13 @@ import Box from "@mui/material/Box";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import OutlinedInput from "@mui/material/OutlinedInput";
-// import Button from "@mui/material/Button";
 
 import StatsCard from "../components/cards/StatsCard";
 import MainCard from "../components/cards/MainCard";
 import EvolutionsCard from "../components/cards/EvolutionsCard";
 import SpritesCard from "../components/cards/SpritesCard";
 import CatchRateCard from "../components/cards/CatchRateCard";
+import NavigateButtons from "../components/NavigateButtons";
 
 import Skeleton from "@mui/material/Skeleton";
 import LoadingEvolutions from "../components/loadingElements/LoadingEvolutions";
@@ -30,6 +30,7 @@ import { normalizeString } from "../resources/pokemonHelper";
 import { useParams } from "react-router";
 import { useTheme } from "@mui/material/styles";
 import { typeColors } from "../colors";
+
 import axios from "axios";
 
 const fetchEvolutionChain = (url) => {
@@ -44,14 +45,16 @@ const Pokemon = () => {
   const [pokemon, setPokemon] = React.useState({});
   const [species, setSpecies] = React.useState({});
   const [evoChain, setEvoChain] = React.useState([]);
-  const theme = useTheme();
 
+  const [currDesc, setCurrDesc] = React.useState("");
   const [color, setColor] = React.useState("");
   const [loading, setLoading] = React.useState(true);
+
+  const theme = useTheme();
+
   const allDescriptions = species?.flavor_text_entries?.filter(
     (entry) => entry?.language?.name === "en"
   );
-  const [currDesc, setCurrDesc] = React.useState("");
 
   React.useEffect(() => {
     window.scrollTo(0, 0);
@@ -78,8 +81,7 @@ const Pokemon = () => {
         setLoading(false);
       }
     })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [pokemonId]);
 
   React.useEffect(() => {
     if (pokemon.types) setColor(typeColors[pokemon.types[0].type.name]);
@@ -96,6 +98,7 @@ const Pokemon = () => {
           width: "100%",
         }}
       >
+        <NavigateButtons pokemonId={pokemonId} />
         {loading ? (
           <LoadingMainCard />
         ) : (

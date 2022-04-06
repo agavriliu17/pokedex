@@ -1,8 +1,13 @@
-import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
+
+import VideogameAssetIcon from "@mui/icons-material/VideogameAsset";
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import HomeIcon from "@mui/icons-material/Home";
+import pokedexLight from "../images/title/pokedexLight.png";
+import pokedexDark from "../images/title/pokedexDark.png";
 
 import SwitchMode from "../components/SwitchMode";
 import Footer from "./Footer";
@@ -15,7 +20,10 @@ const Layout = ({ children }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const playing = location.pathname.includes("game");
+  const selectingGame = location.pathname === "/game";
+
+  const playing =
+    location.pathname === "/game/easy" || location.pathname === "/game/hard";
 
   return (
     <Paper
@@ -44,21 +52,32 @@ const Layout = ({ children }) => {
             alignItems: "center",
           }}
         >
-          {playing ? (
+          {selectingGame ? (
             <Button
               variant="contained"
               onClick={() => navigate(`/`)}
               sx={{ textTransform: "none" }}
+              startIcon={<HomeIcon />}
             >
               Home
+            </Button>
+          ) : playing ? (
+            <Button
+              variant="contained"
+              onClick={() => navigate(`/game`)}
+              sx={{ textTransform: "none" }}
+              startIcon={<ArrowBackIosNewIcon />}
+            >
+              Back
             </Button>
           ) : (
             <Button
               variant="contained"
               onClick={() => navigate(`/game`)}
               sx={{ textTransform: "none" }}
+              startIcon={<VideogameAssetIcon />}
             >
-              Play GTP
+              Play
             </Button>
           )}
           <SwitchMode />
@@ -71,16 +90,17 @@ const Layout = ({ children }) => {
           disableRipple
           sx={{
             marginTop: 2,
-            marginBottom: 5,
+            marginBottom: 6,
             "&.MuiButtonBase-root:hover": {
               bgcolor: "transparent",
             },
           }}
           onClick={() => navigate(`/`)}
         >
-          <Typography variant="h1" sx={{ textDecoration: "none" }}>
-            Pokedex
-          </Typography>
+          <img
+            src={theme.palette.mode === "light" ? pokedexLight : pokedexDark}
+            alt="pokedex"
+          />
         </Button>
         {children}
       </Container>

@@ -41,15 +41,34 @@ const SpritesCard = ({ color, pokemon }) => {
         justifyContent: "center",
         alignItems: "center",
         padding: "20px",
-        flexWrap: "wrap",
         borderRadius: "15px",
+        "@media (max-width: 550px)": {
+          flexDirection: "column",
+          width: "300px",
+        },
       }}
     >
-      <Box sx={{ display: "flex", flexDirection: "row" }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          "@media (max-width: 550px)": {
+            flexDirection: "column",
+          },
+        }}
+      >
         {front_default && <Sprite title="Front" imgSource={front_default} />}
         {back_default && <Sprite title="Back" imgSource={back_default} />}
       </Box>
-      <Box sx={{ display: "flex", flexDirection: "row" }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          "@media (max-width: 550px)": {
+            flexDirection: "column",
+          },
+        }}
+      >
         {front_shiny && <Sprite title="Front Shiny" imgSource={front_shiny} />}
         {back_shiny && <Sprite title="Back Shiny" imgSource={back_shiny} />}
       </Box>

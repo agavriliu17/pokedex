@@ -14,7 +14,7 @@ const ScrollToTop = () => {
           margin: 0,
           top: "auto",
           right: 50,
-          bottom: 50,
+          bottom: 200,
           left: "auto",
           position: "fixed",
         }}

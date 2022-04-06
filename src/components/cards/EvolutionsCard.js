@@ -37,6 +37,7 @@ const EvolutionsCard = ({ color, evolutions }) => {
         <Box
           key={index}
           sx={{
+            minWidth: "300px",
             display: "flex",
             flexDirection: "column",
             alignContent: "center",

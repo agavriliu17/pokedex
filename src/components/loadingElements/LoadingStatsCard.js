@@ -28,6 +28,7 @@ const LoadingStatsCard = () => {
             alignItems: "center",
             marginTop: "5px",
           }}
+          key={`${ind}-loading-stats`}
         >
           <Skeleton
             width={60}
@@ -39,7 +40,6 @@ const LoadingStatsCard = () => {
             variant="text"
             width="100%"
             height="20px"
-            key={ind}
             animation="wave"
           />
         </Box>

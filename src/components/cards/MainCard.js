@@ -52,6 +52,9 @@ const MainCard = ({ pokemon, color, species }) => {
         marginLeft: "25px",
         borderRadius: "15px",
         padding: "15px",
+        "@media (max-width: 550px)": {
+          margin: 0,
+        },
       }}
     >
       <Box
@@ -79,7 +82,15 @@ const MainCard = ({ pokemon, color, species }) => {
             sx={{ width: "fit-content" }}
           />
         </Box>
-        <Box sx={{ display: "flex", flexDirection: "row" }}>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            "@media (max-width: 550px)": {
+              flexDirection: "column",
+            },
+          }}
+        >
           {pokemon.types.map((pokemon, index) => (
             <PokemonType
               type={pokemon.type.name}
@@ -110,10 +121,12 @@ const MainCard = ({ pokemon, color, species }) => {
           title="Color"
           content={`${capitalizeFirstLetter(species?.color?.name)}`}
         />
-        <InfoBlock
-          title="Habitat"
-          content={`${capitalizeFirstLetter(species?.habitat?.name)}`}
-        />
+        {species?.habitat?.name && (
+          <InfoBlock
+            title="Habitat"
+            content={`${capitalizeFirstLetter(species?.habitat?.name)}`}
+          />
+        )}
         <InfoBlock
           title="Shape"
           content={`${capitalizeFirstLetter(species?.shape?.name)}`}

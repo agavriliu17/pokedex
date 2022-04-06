@@ -12,14 +12,21 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import Fade from "@mui/material/Fade";
 import { useTheme } from "@mui/material/styles";
 
-import { capitalizeFirstLetter } from "../resources/pokemonHelper";
+import {
+  capitalizeFirstLetter,
+  getRandomPokemon,
+} from "../resources/pokemonHelper";
 import { typeColors } from "../colors";
 import pokeBall from "../images/pokeBall.png";
+import greatBall from "../images/greatBall.png";
+
+import { useNavigate } from "react-router-dom";
 
 const SearchPokemons = ({ applyFilters, filters }) => {
   const [input, setInput] = useState("");
   const [selectedTypes, setTypes] = useState("");
   const theme = useTheme();
+  const navigate = useNavigate();
 
   const handleInputChange = (event) => {
     setInput(event.target.value);
@@ -40,6 +47,11 @@ const SearchPokemons = ({ applyFilters, filters }) => {
       target: { value },
     } = event;
     setTypes(value);
+  };
+
+  const handleFeelingLucky = () => {
+    const randomId = getRandomPokemon();
+    navigate(`/pokemon/${randomId}`);
   };
 
   return (
@@ -120,6 +132,22 @@ const SearchPokemons = ({ applyFilters, filters }) => {
                 sx={{ marginBottom: "5px" }}
               >
                 <img src={pokeBall} alt="pokeball" width="40px" height="40px" />
+              </IconButton>
+            </Tooltip>
+
+            <Tooltip title="Feeling Lucky">
+              <IconButton
+                variant="contained"
+                color="primary"
+                onClick={handleFeelingLucky}
+                sx={{ marginBottom: "5px" }}
+              >
+                <img
+                  src={greatBall}
+                  alt="great-ball"
+                  width="40px"
+                  height="40px"
+                />
               </IconButton>
             </Tooltip>
           </Box>
