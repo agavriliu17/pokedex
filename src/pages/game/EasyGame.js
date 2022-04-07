@@ -6,22 +6,28 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import OutlinedInput from "@mui/material/OutlinedInput";
 
+import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
 import CustomCircularProgress from "../../components/CustomLoading";
 
 import { getPokemon } from "../../resources/apiHelper";
 
 const easyPokemons = [
-  9, 143, 7, 1, 4, 13, 6, 19, 25, 41, 52, 133, 94, 150, 129,
+  9, 143, 7, 1, 4, 13, 6, 19, 25, 41, 52, 133, 94, 150, 129, 39, 68,
 ];
 
 const EasyGame = () => {
   const [pokemon, setPokemon] = React.useState({});
+  const [input, setInput] = React.useState("");
   const [availablePokemons, setAvailablePokemons] =
     React.useState(easyPokemons);
+
   const [score, setScore] = React.useState(0);
   const [highScore, setHighScore] = React.useState(0);
+  const [streak, setStreak] = React.useState(0);
+
   const [loading, setLoading] = React.useState(true);
-  const [input, setInput] = React.useState("");
+  const [loadedPokemons, setLoadedPokemons] = React.useState(1);
+  const [error, setError] = React.useState(false);
 
   const handleInput = (e) => {
     setInput(e.target.value);
@@ -57,7 +63,7 @@ const EasyGame = () => {
     })();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [score]);
+  }, [loadedPokemons]);
 
   const handleSubmit = (event) => {
     if (event.key === "Enter") {
@@ -68,14 +74,25 @@ const EasyGame = () => {
   const validateAnswer = () => {
     if (input === pokemon.name) {
       setScore(score + 1);
+      setStreak(streak + 1);
+
+      setLoadedPokemons(loadedPokemons + 1);
+      setError(false);
       if (score === highScore) {
         setHighScore(score + 1);
         localStorage.setItem("highScore_easy", JSON.stringify(score + 1));
       }
     } else {
-      setScore(0);
+      setStreak(0);
+      setError(true);
     }
     setInput("");
+  };
+
+  const handleSkip = () => {
+    setStreak(0);
+    setLoadedPokemons(loadedPokemons + 1);
+    setError(false);
   };
 
   return (
@@ -85,10 +102,19 @@ const EasyGame = () => {
           display: "flex",
           flexDirection: "row",
           alignItems: "center",
-          justifyContent: "flex-end",
+          justifyContent: "space-between",
           width: "100%",
         }}
       >
+        <Box
+          sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}
+        >
+          <LocalFireDepartmentIcon />
+          <Typography fontFamily="monospace" fontSize="25px" ml="5px">
+            Streaks:{streak}
+          </Typography>
+        </Box>
+
         <Box>
           <Typography fontFamily="monospace" fontSize="25px">
             HighScore:{highScore}
@@ -132,11 +158,21 @@ const EasyGame = () => {
                 height: "50px",
                 borderRadius: "30px",
               }}
+              error={error}
               value={input}
               onChange={handleInput}
               onKeyDown={handleSubmit}
             />
           </Paper>
+          <Typography
+            fontFamily="monospace"
+            fontSize="20px"
+            onClick={handleSkip}
+            mt="15px"
+            sx={{ cursor: "pointer" }}
+          >
+            Skip this Pokemon
+          </Typography>
         </>
       ) : (
         <Box

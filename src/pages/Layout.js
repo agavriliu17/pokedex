@@ -34,6 +34,8 @@ const Layout = ({ children }) => {
         display: "flex",
         justifyContent: "space-between",
         flexDirection: "column",
+        borderRadius: "0px",
+        overflowX: "hidden",
       }}
       elevation={3}
     >
