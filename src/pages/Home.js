@@ -2,6 +2,7 @@ import React from "react";
 
 import Typography from "@mui/material/Typography";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import { Button } from "@mui/material";
 import Tooltip from "@mui/material/Tooltip";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -24,6 +25,10 @@ function Home() {
   const [loading, setLoading] = React.useState(true);
   const [filters, setFilters] = React.useState({ name: "", type: "" });
   const [value, setValue] = React.useState(0);
+  const [url, setUrl] = React.useState(
+    "https://pokeapi.co/api/v2/pokemon?limit=21&offset=0"
+  );
+
   const { favoritePokemons } = React.useContext(MenuContext);
   const { isVisible, scrollToTop } = useScrollToTop();
 
@@ -34,16 +39,17 @@ function Home() {
   React.useEffect(() => {
     (async function () {
       try {
-        const data = await getPokemons();
+        const data = await getPokemons(url);
 
-        setPokemons(data);
+        setPokemons([...pokemons, ...data]);
         setLoading(false);
       } catch (e) {
         console.error(e);
         setLoading(false);
       }
     })();
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [url]);
 
   const applyFilters = (newFilters) => {
     setFilters(newFilters);
@@ -76,6 +82,13 @@ function Home() {
     return null;
   });
 
+  const handleNextFetch = () => {
+    setLoading(true);
+    setUrl(
+      `https://pokeapi.co/api/v2/pokemon?limit=21&offset=${pokemons.length}`
+    );
+  };
+
   return (
     <>
       <SearchPokemons applyFilters={applyFilters} filters={filters} />
@@ -99,22 +112,16 @@ function Home() {
       >
         {value === 0 ? (
           <>
-            {loading ? (
-              [...Array(9)].map((el, ind) => <LoadingPreviewCard key={ind} />)
-            ) : (
-              <>
-                {filteredPokemons.length !== 0 ? (
-                  filteredPokemons.map((pokemon, index) => (
-                    <PreviewCard
-                      pokemon={pokemon}
-                      key={`${pokemon.id}-${index}`}
-                    />
-                  ))
-                ) : (
-                  <UnknownPokemon />
-                )}
-              </>
-            )}
+            {filteredPokemons.length !== 0
+              ? filteredPokemons.map((pokemon, index) => (
+                  <PreviewCard
+                    pokemon={pokemon}
+                    key={`${pokemon.id}-${index}`}
+                  />
+                ))
+              : pokemons.length > 0 && <UnknownPokemon />}
+            {loading &&
+              [...Array(9)].map((el, ind) => <LoadingPreviewCard key={ind} />)}
           </>
         ) : favoritePokemons.length !== 0 ? (
           favoritePokemons.map((fav, index) => (
@@ -145,6 +152,14 @@ function Home() {
           </>
         )}
       </Box>
+      <Button
+        onClick={handleNextFetch}
+        variant="contained"
+        sx={{ textTransform: "none" }}
+        loading={loading}
+      >
+        Load Pokemons
+      </Button>
       <PokemonMenu />
       {isVisible && (
         <Box

@@ -5,6 +5,8 @@ import Box from "@mui/material/Box";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import OutlinedInput from "@mui/material/OutlinedInput";
+import InfoIcon from "@mui/icons-material/Info";
+import Tooltip from "@mui/material/Tooltip";
 
 import StatsCard from "../components/cards/StatsCard";
 import MainCard from "../components/cards/MainCard";
@@ -12,6 +14,7 @@ import EvolutionsCard from "../components/cards/EvolutionsCard";
 import SpritesCard from "../components/cards/SpritesCard";
 import CatchRateCard from "../components/cards/CatchRateCard";
 import NavigateButtons from "../components/NavigateButtons";
+import AbilitiesCard from "../components/cards/AbilitiesCard";
 
 import Skeleton from "@mui/material/Skeleton";
 import LoadingEvolutions from "../components/loadingElements/LoadingEvolutions";
@@ -20,17 +23,18 @@ import LoadingMainCard from "../components/loadingElements/LoadingMainCard";
 import CalculatorLoading from "../components/loadingElements/CalculatorLoading";
 import LoadingStatsCard from "../components/loadingElements/LoadingStatsCard";
 import LoadingDescription from "../components/loadingElements/LoadingDescription";
+import LoadingAbilities from "../components/loadingElements/LoadingAbilities";
 
 import {
   getPokemon,
   getPokemonSpecies,
   getAllEvolutions,
+  getPokemonAbilities,
 } from "../resources/apiHelper";
 import { normalizeString } from "../resources/pokemonHelper";
 import { useParams } from "react-router";
 import { useTheme } from "@mui/material/styles";
 import { typeColors } from "../colors";
-
 import axios from "axios";
 
 const fetchEvolutionChain = (url) => {
@@ -45,6 +49,7 @@ const Pokemon = () => {
   const [pokemon, setPokemon] = React.useState({});
   const [species, setSpecies] = React.useState({});
   const [evoChain, setEvoChain] = React.useState([]);
+  const [abilities, setAbilities] = React.useState([]);
 
   const [currDesc, setCurrDesc] = React.useState("");
   const [color, setColor] = React.useState("");
@@ -75,6 +80,11 @@ const Pokemon = () => {
           const allEvo = await getAllEvolutions(evolutions?.data.chain);
           setEvoChain(allEvo || []);
         }
+
+        if (data.abilities) {
+          const abilitiesData = await getPokemonAbilities(data.abilities);
+          setAbilities(abilitiesData);
+        }
         setLoading(false);
       } catch (e) {
         console.error(e);
@@ -87,6 +97,7 @@ const Pokemon = () => {
     if (pokemon.types) setColor(typeColors[pokemon.types[0].type.name]);
   }, [pokemon]);
 
+  console.log(abilities);
   return (
     <>
       <Box
@@ -109,6 +120,7 @@ const Pokemon = () => {
           sx={{
             display: "flex",
             flexDirection: "column",
+            // alignItems: "space-evenly",
             margin: "25px",
             "@media (max-width: 800px)": {
               justifyContent: "center",
@@ -231,6 +243,40 @@ const Pokemon = () => {
               <LoadingStatsCard />
             ) : (
               <StatsCard cardColor={color} stats={pokemon.stats} />
+            )}
+          </Box>
+
+          <Box>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+                marginBottom: "10px",
+                marginTop: "20px",
+              }}
+            >
+              <Typography
+                variant="h5"
+                fontFamily="monospace"
+                fontWeight="400"
+                mr="5px"
+              >
+                Abilities
+              </Typography>
+              <Tooltip title="Swipe to reveal abilities" placement="right">
+                <InfoIcon sx={{ fontSize: "20px", marginTop: "4px" }} />
+              </Tooltip>
+            </Box>
+            {loading ? (
+              <LoadingAbilities />
+            ) : (
+              abilities && (
+                <AbilitiesCard
+                  abilities={abilities}
+                  pokemonType={pokemon.types[0].type.name}
+                />
+              )
             )}
           </Box>
         </Box>

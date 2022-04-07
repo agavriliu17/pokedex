@@ -1,9 +1,7 @@
 import axios from "axios";
 
-export const getPokemons = async () => {
-  const data = await axios
-    .get(`https://pokeapi.co/api/v2/pokemon?limit=100&offset=0`)
-    .then((res) => res.data);
+export const getPokemons = async (url) => {
+  const data = await axios.get(url).then((res) => res.data);
 
   const promises = data.results.map((result) => axios.get(result.url));
 
@@ -11,11 +9,7 @@ export const getPokemons = async () => {
     res.map((pokemon) => pokemon.data)
   );
 
-  //   return resolvedData;
-
-  return new Promise((resolve) => {
-    setTimeout(() => resolve(resolvedData), 1000);
-  });
+  return resolvedData;
 };
 
 export const getPokemon = async (id) => {
@@ -24,6 +18,16 @@ export const getPokemon = async (id) => {
     .then((res) => res.data);
 
   return data;
+};
+
+export const getPokemonAbilities = async (abilities) => {
+  const promises = abilities.map((result) => axios.get(result.ability.url));
+
+  const resolvedData = await Promise.all(promises).then((res) =>
+    res.map((ability) => ability.data)
+  );
+
+  return resolvedData;
 };
 
 export const getPokemonSpecies = async (id) => {

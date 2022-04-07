@@ -6,12 +6,12 @@ import MenuItem from "@mui/material/MenuItem";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import Typography from "@mui/material/Typography";
-import Cloud from "@mui/icons-material/Cloud";
 import { useNavigate } from "react-router-dom";
 
 import InfoIcon from "@mui/icons-material/Info";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import HeartBrokenIcon from "@mui/icons-material/HeartBroken";
+import LaunchIcon from "@mui/icons-material/Launch";
 
 import useContextMenu from "../../resources/hooks/useContextMenu";
 import MenuContext from "../../resources/context/MenuContext";
@@ -75,9 +75,13 @@ export default function PokemonMenu() {
             <Divider />
             <MenuItem>
               <ListItemIcon>
-                <Cloud fontSize="small" />
+                <LaunchIcon fontSize="small" />
               </ListItemIcon>
-              <ListItemText>ID: {selectedPokemon.id}</ListItemText>
+              <ListItemText
+                onClick={() => window.open(`/pokemon/${selectedPokemon.id}`)}
+              >
+                Open in new tab
+              </ListItemText>
             </MenuItem>
           </MenuList>
         ) : (

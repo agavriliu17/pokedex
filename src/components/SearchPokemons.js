@@ -156,7 +156,7 @@ const SearchPokemons = ({ applyFilters, filters }) => {
         {(filters.name !== "" || filters.type !== "") && (
           <Button
             variant="contained"
-            sx={{ width: "100px", marginTop: "10px" }}
+            sx={{ width: "120px", marginTop: "10px", textTransform: "none" }}
             onClick={resetFilters}
           >
             Reset filters
