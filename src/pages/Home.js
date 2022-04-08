@@ -2,13 +2,13 @@ import React from "react";
 
 import Typography from "@mui/material/Typography";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import { Button } from "@mui/material";
 import Tooltip from "@mui/material/Tooltip";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import Fab from "@mui/material/Fab";
-import Grow from "@mui/material/Grow";
 
 import LoadingPreviewCard from "../components/loadingElements/LoadingPreviewCard";
 import UnknownPokemon from "../components/cards/UnknownPokemon";
@@ -16,9 +16,10 @@ import PokemonMenu from "../components/cards/PokemonMenu";
 import SearchPokemons from "../components/SearchPokemons";
 import PreviewCard from "../components/cards/PreviewCard";
 
-import MenuContext from "../resources/context/MenuContext";
+import PokemonContext from "../resources/context/PokemonContext";
 import { getPokemons } from "../resources/apiHelper";
 import { useScrollToTop } from "../resources/hooks/useScrollToTop";
+import { motion } from "framer-motion";
 
 function Home() {
   const [pokemons, setPokemons] = React.useState([]);
@@ -29,7 +30,7 @@ function Home() {
     "https://pokeapi.co/api/v2/pokemon?limit=21&offset=0"
   );
 
-  const { favoritePokemons } = React.useContext(MenuContext);
+  const { favoritePokemons } = React.useContext(PokemonContext);
   const { isVisible, scrollToTop } = useScrollToTop();
 
   const handleChange = (event, newValue) => {
@@ -92,7 +93,6 @@ function Home() {
   return (
     <>
       <SearchPokemons applyFilters={applyFilters} filters={filters} />
-
       <Tabs
         value={value}
         onChange={handleChange}
@@ -122,6 +122,24 @@ function Home() {
               : pokemons.length > 0 && <UnknownPokemon />}
             {loading &&
               [...Array(9)].map((el, ind) => <LoadingPreviewCard key={ind} />)}
+            <Box
+              sx={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "center",
+                marginTop: "25px",
+              }}
+            >
+              <Button
+                endIcon={<CloudDownloadIcon />}
+                onClick={handleNextFetch}
+                variant="contained"
+                sx={{ textTransform: "none" }}
+                disabled={loading}
+              >
+                Load Pokemons
+              </Button>
+            </Box>
           </>
         ) : favoritePokemons.length !== 0 ? (
           favoritePokemons.map((fav, index) => (
@@ -152,45 +170,28 @@ function Home() {
           </>
         )}
       </Box>
-      <Button
-        onClick={handleNextFetch}
-        variant="contained"
-        sx={{ textTransform: "none" }}
-        loading={loading}
-      >
-        Load Pokemons
-      </Button>
+
       <PokemonMenu />
       {isVisible && (
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "flex-end",
-            width: "100%",
-            position: "sticky",
-            margin: 0,
-            top: "auto",
-            right: 50,
-            bottom: 50,
-            left: "auto",
-          }}
-        >
-          <Tooltip title="Scroll to top">
-            <Grow
-              in={isVisible}
-              unmountOnExit
-              timeout={500}
-              //TODO: Add exit animation
-              easing={{
-                exit: "cubic-bezier(0, 1.5, .8, 1)",
-              }}
-            >
-              <Fab color="primary" onClick={scrollToTop}>
-                <ArrowUpwardIcon />
-              </Fab>
-            </Grow>
-          </Tooltip>
-        </Box>
+        <Tooltip title="Scroll to top">
+          <Fab
+            color="primary"
+            aria-label="add"
+            sx={{
+              margin: 0,
+              top: "auto",
+              right: 50,
+              bottom: 50,
+              left: "auto",
+              position: "fixed",
+            }}
+            onClick={scrollToTop}
+            component={motion.div}
+            //TODO: Animate
+          >
+            <ArrowUpwardIcon />
+          </Fab>
+        </Tooltip>
       )}
     </>
   );

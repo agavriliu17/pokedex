@@ -1,5 +1,6 @@
 import Box from "@mui/material/Box";
 import Skeleton from "@mui/material/Skeleton";
+
 import { useTheme } from "@mui/material/styles";
 
 const LoadingStatsCard = () => {
@@ -17,6 +18,9 @@ const LoadingStatsCard = () => {
         borderRadius: "15px",
         boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2)",
         padding: "20px",
+        "@media (max-width: 550px)": {
+          width: "275px",
+        },
       }}
     >
       {[...Array(5)].map((el, ind) => (

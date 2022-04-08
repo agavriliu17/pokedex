@@ -8,15 +8,17 @@ import Box from "@mui/material/Box";
 
 import { useNavigate } from "react-router-dom";
 
-const NavigateButtons = ({ pokemonId }) => {
+const NavigateButtons = ({ pokemonId, setLoading }) => {
   const navigate = useNavigate();
 
   const handlePreviousPokemon = () => {
     navigate(`/pokemon/${pokemonId - 1}`);
+    setLoading(true);
   };
 
   const handleNextPokemon = () => {
     navigate(`/pokemon/${parseInt(pokemonId) + 1}`);
+    setLoading(true);
   };
   return (
     <Box

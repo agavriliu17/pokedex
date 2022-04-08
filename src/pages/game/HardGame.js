@@ -105,7 +105,7 @@ const HardGame = () => {
   };
 
   const validateAnswer = () => {
-    if (input === pokemon.name) {
+    if (input.toLowerCase() === pokemon.name) {
       setScore(score + 1);
       setStreak(streak + 1);
 

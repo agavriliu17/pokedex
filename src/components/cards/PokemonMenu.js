@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import Divider from "@mui/material/Divider";
 import Paper from "@mui/material/Paper";
 import MenuList from "@mui/material/MenuList";
@@ -6,7 +6,7 @@ import MenuItem from "@mui/material/MenuItem";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import Typography from "@mui/material/Typography";
-import { useNavigate } from "react-router-dom";
+import Box from "@mui/material/Box";
 
 import InfoIcon from "@mui/icons-material/Info";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -14,8 +14,8 @@ import HeartBrokenIcon from "@mui/icons-material/HeartBroken";
 import LaunchIcon from "@mui/icons-material/Launch";
 
 import useContextMenu from "../../resources/hooks/useContextMenu";
-import MenuContext from "../../resources/context/MenuContext";
-import Box from "@mui/material/Box";
+import PokemonContext from "../../resources/context/PokemonContext";
+import { useNavigate } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
 
 export default function PokemonMenu() {
@@ -28,7 +28,7 @@ export default function PokemonMenu() {
     favoritePokemons,
     addToFavorites,
     removeFromFavorites,
-  } = React.useContext(MenuContext);
+  } = React.useContext(PokemonContext);
 
   const isFavorite = favoritePokemons.find(
     (fav) => fav.id === selectedPokemon.id

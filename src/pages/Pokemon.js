@@ -26,6 +26,7 @@ import LoadingDescription from "../components/loadingElements/LoadingDescription
 import LoadingAbilities from "../components/loadingElements/LoadingAbilities";
 
 import {
+  fetchEvolutionChain,
   getPokemon,
   getPokemonSpecies,
   getAllEvolutions,
@@ -35,14 +36,6 @@ import { normalizeString } from "../resources/pokemonHelper";
 import { useParams } from "react-router";
 import { useTheme } from "@mui/material/styles";
 import { typeColors } from "../colors";
-import axios from "axios";
-
-const fetchEvolutionChain = (url) => {
-  if (url) {
-    return axios.get(url);
-  }
-  return null;
-};
 
 const Pokemon = () => {
   const { pokemonId } = useParams();
@@ -69,7 +62,11 @@ const Pokemon = () => {
         const data = await getPokemon(pokemonId);
         const specieData = await getPokemonSpecies(pokemonId);
 
-        setCurrDesc(specieData.flavor_text_entries[0]);
+        setCurrDesc(
+          specieData.flavor_text_entries.find(
+            (entry) => entry?.language?.name === "en"
+          )
+        );
         setPokemon(data);
         setSpecies(specieData);
 
@@ -97,7 +94,6 @@ const Pokemon = () => {
     if (pokemon.types) setColor(typeColors[pokemon.types[0].type.name]);
   }, [pokemon]);
 
-  console.log(abilities);
   return (
     <>
       <Box
@@ -109,7 +105,7 @@ const Pokemon = () => {
           width: "100%",
         }}
       >
-        <NavigateButtons pokemonId={pokemonId} />
+        <NavigateButtons pokemonId={pokemonId} setLoading={setLoading} />
         {loading ? (
           <LoadingMainCard />
         ) : (
@@ -120,7 +116,6 @@ const Pokemon = () => {
           sx={{
             display: "flex",
             flexDirection: "column",
-            // alignItems: "space-evenly",
             margin: "25px",
             "@media (max-width: 800px)": {
               justifyContent: "center",
@@ -230,7 +225,7 @@ const Pokemon = () => {
               </Typography>
             )}
           </Box>
-          <Box>
+          <Box sx={{ width: "100%" }}>
             <Typography
               variant="h5"
               fontFamily="monospace"

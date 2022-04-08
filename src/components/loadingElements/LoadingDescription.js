@@ -3,7 +3,13 @@ import Skeleton from "@mui/material/Skeleton";
 
 const LoadingDescription = () => {
   return (
-    <Box>
+    <Box
+      sx={{
+        "@media (max-width: 550px)": {
+          width: "300px",
+        },
+      }}
+    >
       {[...Array(5)].map((el, ind) => (
         <Skeleton
           variant="text"

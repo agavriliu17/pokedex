@@ -21,7 +21,7 @@ function CustomCircularProgress({ value, size = 70, thickness = 5 }) {
       <CircularProgress
         variant={value ? "determinate" : "indeterminate"}
         value={value}
-        disableShrink
+        disableShrink={value ? null : true}
         sx={{
           color: (theme) =>
             theme.palette.mode === "light" ? "#1a90ff" : "#308fe8",

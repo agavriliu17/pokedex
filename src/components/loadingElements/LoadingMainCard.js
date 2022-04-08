@@ -18,6 +18,9 @@ const LoadingMainCard = () => {
         borderRadius: "15px",
         boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2)",
         padding: "15px",
+        "@media (max-width: 550px)": {
+          margin: 0,
+        },
       }}
     >
       <Box
@@ -32,7 +35,15 @@ const LoadingMainCard = () => {
           <Skeleton width="150px" height="25px" sx={{ marginBottom: "20px" }} />
           <Skeleton width="100px" height="25px" />
         </Box>
-        <Box sx={{ display: "flex", flexDirection: "row" }}>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            "@media (max-width: 550px)": {
+              flexDirection: "column",
+            },
+          }}
+        >
           <Skeleton width="100px" height="50px" sx={{ marginRight: "10px" }} />
           <Skeleton width="100px" height="50px" />
         </Box>

@@ -3,6 +3,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import Tooltip from "@mui/material/Tooltip";
+import Fade from "@mui/material/Fade";
 
 import LinearProgress, {
   linearProgressClasses,
@@ -33,55 +34,57 @@ const StatsCard = ({ cardColor, stats }) => {
     return theme.palette.highStat;
   };
   return (
-    <Card
-      raised
-      sx={{
-        display: "flex",
-        justifyContent: "center",
-        flexDirection: "column",
-        width: "400px",
-        height: "150px",
-        backgroundColor: cardColor,
-        padding: "20px",
-        borderRadius: "15px",
-        "@media (max-width: 550px)": {
-          width: "300px",
-        },
-        "@media (max-width: 400px)": {
-          width: "250px",
-        },
-      }}
-    >
-      {stats.map((stat, index) => (
-        <Box
-          sx={{ display: "flex", alignItems: "center", flexDir: "row" }}
-          key={index}
-        >
-          <Grid container spacing={3} alignItems="center">
-            <Grid item xs={8} md={5}>
-              <Typography mr="5px" fontFamily="monospace">
-                {normalizeString(stat.stat.name)}
-              </Typography>
+    <Fade in timeout={500}>
+      <Card
+        raised
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          flexDirection: "column",
+          width: "400px",
+          height: "150px",
+          backgroundColor: cardColor,
+          padding: "20px",
+          borderRadius: "15px",
+          "@media (max-width: 550px)": {
+            width: "300px",
+          },
+          "@media (max-width: 400px)": {
+            width: "250px",
+          },
+        }}
+      >
+        {stats.map((stat, index) => (
+          <Box
+            sx={{ display: "flex", alignItems: "center", flexDir: "row" }}
+            key={index}
+          >
+            <Grid container spacing={3} alignItems="center">
+              <Grid item xs={8} md={5}>
+                <Typography mr="5px" fontFamily="monospace">
+                  {normalizeString(stat.stat.name)}
+                </Typography>
+              </Grid>
+              <Grid item xs={4} md={7}>
+                <Tooltip title={stat.base_stat} placement="right">
+                  <Box sx={{ width: "100%" }}>
+                    <BorderLinearProgress
+                      variant="determinate"
+                      value={stat.base_stat / 2}
+                      sx={{
+                        "& .MuiLinearProgress-barColorPrimary": {
+                          backgroundColor: calculateStatLevel(stat.base_stat),
+                        },
+                      }}
+                    />
+                  </Box>
+                </Tooltip>
+              </Grid>
             </Grid>
-            <Grid item xs={4} md={7}>
-              <Tooltip title={stat.base_stat} placement="right">
-                <Box sx={{ width: "100%" }}>
-                  <BorderLinearProgress
-                    variant="determinate"
-                    value={stat.base_stat / 2}
-                    sx={{
-                      "& .MuiLinearProgress-barColorPrimary": {
-                        backgroundColor: calculateStatLevel(stat.base_stat),
-                      },
-                    }}
-                  />
-                </Box>
-              </Tooltip>
-            </Grid>
-          </Grid>
-        </Box>
-      ))}
-    </Card>
+          </Box>
+        ))}
+      </Card>
+    </Fade>
   );
 };
 

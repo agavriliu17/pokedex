@@ -41,7 +41,11 @@ const CalculatorLoading = () => {
         <Skeleton width="250px" height="50px" />
       </Box>
       <Box
-        sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
       >
         <Skeleton width="100px" height="25px" sx={{ marginBottom: "5px" }} />
         <Box sx={{ display: "flex", flexDirection: "row" }}>

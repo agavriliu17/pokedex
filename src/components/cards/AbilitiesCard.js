@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Card from "@mui/material/Card";
 import Typography from "@mui/material/Typography";
+import Fade from "@mui/material/Fade";
 import { useTheme } from "@mui/material/styles";
 
 import { motion, AnimatePresence } from "framer-motion";
@@ -93,13 +94,17 @@ function CustomCards(props) {
         {description.flavor_text}
       </Typography>
 
-      <Typography fontFamily="monospace" fontWeight="500" fontSize="18px">
-        Effect:
-      </Typography>
+      {effectEntries && (
+        <>
+          <Typography fontFamily="monospace" fontWeight="500" fontSize="18px">
+            Effect:
+          </Typography>
 
-      <Typography fontFamily="monospace" fontSize="15px">
-        {effectEntries.short_effect}
-      </Typography>
+          <Typography fontFamily="monospace" fontSize="15px">
+            {effectEntries.short_effect}
+          </Typography>
+        </>
+      )}
     </Card>
   );
 }
@@ -112,46 +117,50 @@ export default function AbilitiesCard({ abilities, pokemonType }) {
   const color = solidColors[theme.palette.mode][pokemonType];
 
   return (
-    <motion.div
-      style={{
-        width: 150,
-        height: 175,
-        position: "relative",
-      }}
-    >
-      <AnimatePresence initial={false}>
-        <CustomCards
-          key={index + 1}
-          initial={{ scale: 0, y: 105, opacity: 0 }}
-          animate={{ scale: 0.75, y: 30, opacity: 0.5 }}
-          transition={{
-            scale: { duration: 0.2 },
-            opacity: { duration: 0.4 },
-          }}
-          cardColor={color}
-          ability={
-            index === abilities.length - 1 ? abilities[0] : abilities[index + 1]
-          }
-        />
-        <CustomCards
-          key={index}
-          animate={{ scale: 1, y: 0, opacity: 1 }}
-          transition={{
-            type: "spring",
-            stiffness: 300,
-            damping: 20,
-            opacity: { duration: 0.2 },
-          }}
-          exitX={exitX}
-          setExitX={setExitX}
-          index={index}
-          setIndex={setIndex}
-          drag="x"
-          cardColor={color}
-          maxCards={abilities.length}
-          ability={abilities[index]}
-        />
-      </AnimatePresence>
-    </motion.div>
+    <Fade in timeout={500}>
+      <motion.div
+        style={{
+          width: 150,
+          height: 175,
+          position: "relative",
+        }}
+      >
+        <AnimatePresence initial={false}>
+          <CustomCards
+            key={index + 1}
+            initial={{ scale: 0, y: 105, opacity: 0 }}
+            animate={{ scale: 0.75, y: 30, opacity: 0.5 }}
+            transition={{
+              scale: { duration: 0.2 },
+              opacity: { duration: 0.4 },
+            }}
+            cardColor={color}
+            ability={
+              index === abilities.length - 1
+                ? abilities[0]
+                : abilities[index + 1]
+            }
+          />
+          <CustomCards
+            key={index}
+            animate={{ scale: 1, y: 0, opacity: 1 }}
+            transition={{
+              type: "spring",
+              stiffness: 300,
+              damping: 20,
+              opacity: { duration: 0.2 },
+            }}
+            exitX={exitX}
+            setExitX={setExitX}
+            index={index}
+            setIndex={setIndex}
+            drag="x"
+            cardColor={color}
+            maxCards={abilities.length}
+            ability={abilities[index]}
+          />
+        </AnimatePresence>
+      </motion.div>
+    </Fade>
   );
 }

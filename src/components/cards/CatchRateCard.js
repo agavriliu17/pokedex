@@ -3,44 +3,27 @@ import React from "react";
 import Card from "@mui/material/Card";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
-import OutlinedInput from "@mui/material/OutlinedInput";
 import Checkbox from "@mui/material/Checkbox";
-import FormControlLabel from "@mui/material/FormControlLabel";
 import Paper from "@mui/material/Paper";
-import { useTheme } from "@mui/material/styles";
 import Link from "@mui/material/Link";
-
-import Button from "@mui/material/Button";
+import Fade from "@mui/material/Fade";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import OutlinedInput from "@mui/material/OutlinedInput";
 
 import pokeball from "../../images/pokeballs/Simple-pokeball.png";
 import greatball from "../../images/pokeballs/Great-ball.png";
 import masterball from "../../images/pokeballs/Master-ball.png";
+
+import {
+  ballMod,
+  statusAilment,
+  pokemonStatus,
+} from "../../resources/constants";
 import CustomCircularProgress from "../CustomLoading";
-const pokemonStatus = [
-  "Normal",
-  "Poisoned",
-  "Burned",
-  "Paralyzed",
-  "Frozen",
-  "Asleep",
-];
-
-const statusAilment = {
-  Normal: 0,
-  Poisoned: 12,
-  Burned: 12,
-  Paralyzed: 12,
-  Frozen: 25,
-  Asleep: 25,
-};
-
-const ballMod = {
-  pokeball: 255,
-  greatball: 200,
-  masterball: 150,
-};
+import { useTheme } from "@mui/material/styles";
 
 const CatchRateCard = ({ cardColor, catchRate, pokemonHealth }) => {
   const [calculated, setCalculated] = React.useState(false);
@@ -53,7 +36,10 @@ const CatchRateCard = ({ cardColor, catchRate, pokemonHealth }) => {
   const theme = useTheme();
 
   const handleInputUpdate = (ev, key) => {
-    setForm({ ...form, [key]: ev.target.value });
+    if (key === "health") {
+      if (parseInt(ev.target.value) <= 100)
+        setForm({ ...form, [key]: ev.target.value });
+    } else setForm({ ...form, [key]: ev.target.value });
   };
 
   const handleCheckUpdate = (pokeball, key) => {
@@ -98,256 +84,258 @@ const CatchRateCard = ({ cardColor, catchRate, pokemonHealth }) => {
   };
 
   return (
-    <Card
-      raised
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        width: "300px",
-        minHeight: "400px",
-        backgroundColor: cardColor,
-        padding: "20px",
-        borderRadius: "15px",
-        justifyContent: "space-between",
-      }}
-    >
-      {!calculated ? (
-        <>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
-            <Typography
-              fontFamily="monospace"
-              fontWeight="400"
-              mr="10px"
-              fontSize="20px"
-              mb="5px"
-            >
-              Pokemon status:
-            </Typography>
-            <Paper
-              sx={{
-                width: "250px",
-                borderRadius: "30px",
-                height: "35px",
-                backgroundColor:
-                  theme.palette.mode === "light" ? "#fff" : "#2d333b",
-              }}
-            >
-              <Select
-                input={<OutlinedInput placeholder="Chip" />}
-                label="Age"
-                MenuProps={{
-                  PaperProps: {
-                    sx: {
-                      maxHeight: 200,
-                      backgroundColor:
-                        theme.palette.mode === "light" ? "#fff" : "#2d333b",
-                    },
-                  },
-                }}
-                sx={{
-                  width: "250px",
-                  height: "35px",
-                  borderRadius: "30px",
-                }}
-                value={form.status}
-                onChange={(ev) => handleInputUpdate(ev, "status")}
-              >
-                {pokemonStatus.map((statusOption, index) => (
-                  <MenuItem
-                    key={`${statusOption}-${index}`}
-                    value={statusOption}
-                  >
-                    {statusOption}
-                  </MenuItem>
-                ))}
-              </Select>
-            </Paper>
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              marginTop: "20px",
-            }}
-          >
-            <Typography
-              fontFamily="monospace"
-              fontWeight="400"
-              mr="10px"
-              mb="5px"
-              fontSize="20px"
-            >
-              Current Health:
-            </Typography>
-            <Paper
-              sx={{
-                width: "250px",
-                borderRadius: "30px",
-                height: "35px",
-                backgroundColor:
-                  theme.palette.mode === "light" ? "#fff" : "#2d333b",
-              }}
-            >
-              <OutlinedInput
-                type="number"
-                inputProps={{ min: "0", max: "100", step: "5" }}
-                sx={{
-                  width: "250px",
-                  height: "35px",
-                  borderRadius: "30px",
-                }}
-                value={form.health}
-                onChange={(ev) => handleInputUpdate(ev, "health")}
-              />
-            </Paper>
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              marginTop: "20px",
-            }}
-          >
-            <Typography
-              fontFamily="monospace"
-              fontWeight="400"
-              mr="10px"
-              fontSize="20px"
-              mb="5px"
-            >
-              Select your pokeball:
-            </Typography>
+    <Fade in timeout={500}>
+      <Card
+        raised
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          width: "300px",
+          minHeight: "400px",
+          backgroundColor: cardColor,
+          padding: "20px",
+          borderRadius: "15px",
+          justifyContent: "space-between",
+        }}
+      >
+        {!calculated ? (
+          <>
             <Box
               sx={{
                 display: "flex",
-                flexDirection: "row",
+                flexDirection: "column",
                 alignItems: "center",
               }}
             >
-              <FormControlLabel
-                control={<Checkbox />}
-                checked={form.pokeball === "pokeball"}
-                onChange={() => handleCheckUpdate("pokeball", "pokeball")}
-                label={
-                  <img
-                    src={pokeball}
-                    alt="simple-pokeball"
-                    height="40px"
-                    width="40px"
-                  />
-                }
-                labelPlacement="top"
-                sx={{ padding: "0px" }}
-              />
-              <FormControlLabel
-                control={<Checkbox />}
-                checked={form.pokeball === "greatball"}
-                onChange={() => handleCheckUpdate("greatball", "pokeball")}
-                label={
-                  <img
-                    src={greatball}
-                    alt="simple-pokeball"
-                    height="40px"
-                    width="40px"
-                  />
-                }
-                labelPlacement="top"
-                sx={{ padding: "0px" }}
-              />
-              <FormControlLabel
-                control={<Checkbox />}
-                checked={form.pokeball === "masterball"}
-                onChange={() => handleCheckUpdate("masterball", "pokeball")}
-                label={
-                  <img
-                    src={masterball}
-                    alt="simple-pokeball"
-                    height="40px"
-                    width="40px"
-                  />
-                }
-                labelPlacement="top"
-                sx={{ padding: "0px" }}
-              />
+              <Typography
+                fontFamily="monospace"
+                fontWeight="400"
+                mr="10px"
+                fontSize="20px"
+                mb="5px"
+              >
+                Pokemon status:
+              </Typography>
+              <Paper
+                sx={{
+                  width: "250px",
+                  borderRadius: "30px",
+                  height: "35px",
+                  backgroundColor:
+                    theme.palette.mode === "light" ? "#fff" : "#2d333b",
+                }}
+              >
+                <Select
+                  input={<OutlinedInput placeholder="Chip" />}
+                  label="Age"
+                  MenuProps={{
+                    PaperProps: {
+                      sx: {
+                        maxHeight: 200,
+                        backgroundColor:
+                          theme.palette.mode === "light" ? "#fff" : "#2d333b",
+                      },
+                    },
+                  }}
+                  sx={{
+                    width: "250px",
+                    height: "35px",
+                    borderRadius: "30px",
+                  }}
+                  value={form.status}
+                  onChange={(ev) => handleInputUpdate(ev, "status")}
+                >
+                  {pokemonStatus.map((statusOption, index) => (
+                    <MenuItem
+                      key={`${statusOption}-${index}`}
+                      value={statusOption}
+                    >
+                      {statusOption}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </Paper>
             </Box>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                marginTop: "20px",
+              }}
+            >
+              <Typography
+                fontFamily="monospace"
+                fontWeight="400"
+                mr="10px"
+                mb="5px"
+                fontSize="20px"
+              >
+                Current Health:
+              </Typography>
+              <Paper
+                sx={{
+                  width: "250px",
+                  borderRadius: "30px",
+                  height: "35px",
+                  backgroundColor:
+                    theme.palette.mode === "light" ? "#fff" : "#2d333b",
+                }}
+              >
+                <OutlinedInput
+                  type="number"
+                  inputProps={{ min: "0", max: "100", step: "5" }}
+                  sx={{
+                    width: "250px",
+                    height: "35px",
+                    borderRadius: "30px",
+                  }}
+                  value={form.health}
+                  onChange={(ev) => handleInputUpdate(ev, "health")}
+                />
+              </Paper>
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                marginTop: "20px",
+              }}
+            >
+              <Typography
+                fontFamily="monospace"
+                fontWeight="400"
+                mr="10px"
+                fontSize="20px"
+                mb="5px"
+              >
+                Select your pokeball:
+              </Typography>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                <FormControlLabel
+                  control={<Checkbox />}
+                  checked={form.pokeball === "pokeball"}
+                  onChange={() => handleCheckUpdate("pokeball", "pokeball")}
+                  label={
+                    <img
+                      src={pokeball}
+                      alt="simple-pokeball"
+                      height="40px"
+                      width="40px"
+                    />
+                  }
+                  labelPlacement="top"
+                  sx={{ padding: "0px" }}
+                />
+                <FormControlLabel
+                  control={<Checkbox />}
+                  checked={form.pokeball === "greatball"}
+                  onChange={() => handleCheckUpdate("greatball", "pokeball")}
+                  label={
+                    <img
+                      src={greatball}
+                      alt="simple-pokeball"
+                      height="40px"
+                      width="40px"
+                    />
+                  }
+                  labelPlacement="top"
+                  sx={{ padding: "0px" }}
+                />
+                <FormControlLabel
+                  control={<Checkbox />}
+                  checked={form.pokeball === "masterball"}
+                  onChange={() => handleCheckUpdate("masterball", "pokeball")}
+                  label={
+                    <img
+                      src={masterball}
+                      alt="simple-pokeball"
+                      height="40px"
+                      width="40px"
+                    />
+                  }
+                  labelPlacement="top"
+                  sx={{ padding: "0px" }}
+                />
+              </Box>
+              <Button
+                variant="contained"
+                sx={{ marginTop: "20px" }}
+                onClick={calculateCatchRate}
+              >
+                Catch!
+              </Button>
+            </Box>
+          </>
+        ) : (
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              width: "300px",
+            }}
+          >
+            <Typography
+              fontFamily="monospace"
+              fontWeight="400"
+              mr="10px"
+              fontSize="20px"
+              mb="15px"
+            >
+              {`Success rate: ${catchPercentage}%`}
+            </Typography>
+
+            <CustomCircularProgress value={catchPercentage} />
+            <Typography
+              fontFamily="monospace"
+              fontWeight="400"
+              mr="10px"
+              fontSize="18px"
+              mt="15px"
+              align="center"
+            >
+              {calculatePokeballs(catchPercentage)}
+            </Typography>
             <Button
               variant="contained"
               sx={{ marginTop: "20px" }}
-              onClick={calculateCatchRate}
+              onClick={() => setCalculated(false)}
             >
-              Catch!
+              Calculate again
             </Button>
-          </Box>
-        </>
-      ) : (
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            width: "300px",
-          }}
-        >
-          <Typography
-            fontFamily="monospace"
-            fontWeight="400"
-            mr="10px"
-            fontSize="20px"
-            mb="15px"
-          >
-            {`Success rate: ${catchPercentage}%`}
-          </Typography>
-
-          <CustomCircularProgress value={catchPercentage} />
-          <Typography
-            fontFamily="monospace"
-            fontWeight="400"
-            mr="10px"
-            fontSize="18px"
-            mt="15px"
-            align="center"
-          >
-            {calculatePokeballs(catchPercentage)}
-          </Typography>
-          <Button
-            variant="contained"
-            sx={{ marginTop: "20px" }}
-            onClick={() => setCalculated(false)}
-          >
-            Calculate again
-          </Button>
-          <Typography
-            fontFamily="monospace"
-            fontWeight="400"
-            mr="10px"
-            fontSize="14px"
-            mt="15px"
-            align="center"
-          >
-            If you want to learn more about the exact additions way of
-            calculating,{" "}
-            <Link
-              href="https://bulbapedia.bulbagarden.net/wiki/Catch_rate"
+            <Typography
               fontFamily="monospace"
-              fontWeight="700"
-              color="inherit"
+              fontWeight="400"
+              mr="10px"
+              fontSize="14px"
+              mt="15px"
+              align="center"
             >
-              click here
-            </Link>
-            .
-          </Typography>
-        </Box>
-      )}
-    </Card>
+              If you want to learn more about the exact additions way of
+              calculating,{" "}
+              <Link
+                href="https://bulbapedia.bulbagarden.net/wiki/Catch_rate"
+                fontFamily="monospace"
+                fontWeight="700"
+                color="inherit"
+              >
+                click here
+              </Link>
+              .
+            </Typography>
+          </Box>
+        )}
+      </Card>
+    </Fade>
   );
 };
 

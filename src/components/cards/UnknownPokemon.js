@@ -6,7 +6,7 @@ import pokemon from "../../images/unknown_pokemon.png";
 
 const UnknownPokemon = () => {
   return (
-    <Fade in timeout={1000}>
+    <Fade in timeout={500}>
       <Card
         raised
         sx={{

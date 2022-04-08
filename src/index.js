@@ -2,13 +2,13 @@ import React from "react";
 import ReactDOM from "react-dom";
 
 import App from "./App";
-import { MenuProvider } from "./resources/context/MenuContext";
+import { PokemonProvider } from "./resources/context/PokemonContext";
 
 ReactDOM.render(
   <React.StrictMode>
-    <MenuProvider>
+    <PokemonProvider>
       <App />
-    </MenuProvider>
+    </PokemonProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

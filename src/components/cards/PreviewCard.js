@@ -3,10 +3,10 @@ import { useContext } from "react";
 import Typography from "@mui/material/Typography";
 import Card from "@mui/material/Card";
 import Box from "@mui/material/Box";
-// import Fade from "@mui/material/Fade";
+import Fade from "@mui/material/Fade";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 
-import MenuContext from "../../resources/context/MenuContext";
+import PokemonContext from "../../resources/context/PokemonContext";
 
 import PokemonType from "../PokemonType";
 import {
@@ -18,7 +18,7 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
 const PreviewCard = ({ pokemon }) => {
-  const { selectPokemon, favoritePokemons } = useContext(MenuContext);
+  const { selectPokemon, favoritePokemons } = useContext(PokemonContext);
 
   const navigate = useNavigate();
 
@@ -28,95 +28,97 @@ const PreviewCard = ({ pokemon }) => {
   const isFavorite = favoritePokemons.find((fav) => fav.id === pokemon.id);
 
   return (
-    <Card
-      raised
-      sx={{
-        width: "275px",
-        height: "200px",
-        margin: "20px",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: cardColor,
-        borderRadius: "15px",
-        "&:hover": {
-          backgroundColor: hoverColor,
-        },
-      }}
-      component={motion.div}
-      whileHover={{
-        scale: 1.2,
-        transition: { duration: 0.3 },
-      }}
-      onContextMenu={() => selectPokemon(pokemon)}
-      onClick={() => navigate(`/pokemon/${pokemon.id}`)}
-    >
-      <Box
+    <Fade in timeout={500}>
+      <Card
+        raised
         sx={{
-          alignItems: "center",
+          width: "275px",
+          height: "200px",
+          margin: "20px",
           display: "flex",
-          justifyContent: "space-between",
-          width: "85%",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: cardColor,
+          borderRadius: "15px",
+          "&:hover": {
+            backgroundColor: hoverColor,
+          },
         }}
+        component={motion.div}
+        whileHover={{
+          scale: 1.2,
+          transition: { duration: 0.3 },
+        }}
+        onContextMenu={() => selectPokemon(pokemon)}
+        onClick={() => navigate(`/pokemon/${pokemon.id}`)}
       >
-        <Typography
-          color="#fff"
-          fontFamily="monospace"
-          fontWeight={700}
-          fontSize={20}
-        >
-          {capitalizeFirstLetter(pokemon.name)}
-        </Typography>
         <Box
           sx={{
-            display: "flex",
-            flexDirection: "row",
             alignItems: "center",
+            display: "flex",
+            justifyContent: "space-between",
+            width: "85%",
           }}
         >
-          {isFavorite && (
-            <FavoriteIcon
-              fontSize="small"
-              sx={{ marginRight: "5px", color: "#7C0D0E" }}
-            />
-          )}
-
           <Typography
             color="#fff"
             fontFamily="monospace"
             fontWeight={700}
             fontSize={20}
           >
-            {formatNumber(pokemon.id)}
+            {capitalizeFirstLetter(pokemon.name)}
           </Typography>
-        </Box>
-      </Box>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+            }}
+          >
+            {isFavorite && (
+              <FavoriteIcon
+                fontSize="small"
+                sx={{ marginRight: "5px", color: "#7C0D0E" }}
+              />
+            )}
 
-      <Box
-        sx={{
-          alignItems: "center",
-          display: "flex",
-          justifyContent: "space-between",
-          width: "90%",
-        }}
-      >
-        <Box>
-          {pokemon.types.map((pokemon, index) => (
-            <PokemonType
-              type={pokemon.type.name}
-              key={`${pokemon.type.name}-${index}`}
-            />
-          ))}
+            <Typography
+              color="#fff"
+              fontFamily="monospace"
+              fontWeight={700}
+              fontSize={20}
+            >
+              {formatNumber(pokemon.id)}
+            </Typography>
+          </Box>
         </Box>
-        <img
-          src={pokemon.sprites.other["official-artwork"].front_default}
-          alt="pokemon"
-          height="130px"
-          width="130px"
-        />
-      </Box>
-    </Card>
+
+        <Box
+          sx={{
+            alignItems: "center",
+            display: "flex",
+            justifyContent: "space-between",
+            width: "90%",
+          }}
+        >
+          <Box>
+            {pokemon.types.map((pokemon, index) => (
+              <PokemonType
+                type={pokemon.type.name}
+                key={`${pokemon.type.name}-${index}`}
+              />
+            ))}
+          </Box>
+          <img
+            src={pokemon.sprites.other["official-artwork"].front_default}
+            alt="pokemon"
+            height="130px"
+            width="130px"
+          />
+        </Box>
+      </Card>
+    </Fade>
   );
 };
 

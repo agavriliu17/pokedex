@@ -83,3 +83,10 @@ export const getAllEvolutions = async (chain) => {
 
   return evolutions;
 };
+
+export const fetchEvolutionChain = (url) => {
+  if (url) {
+    return axios.get(url);
+  }
+  return null;
+};
