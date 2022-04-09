@@ -12,6 +12,7 @@ import NotFound from "./pages/NotFound";
 import Layout from "./pages/Layout.js";
 
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import SnackbarProvider from "react-simple-snackbar";
 import { getDesignTokens } from "./resources/theme.js";
 
 export const ColorModeContext = React.createContext({
@@ -37,18 +38,20 @@ const App = () => {
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
-        <BrowserRouter>
-          <Layout>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="pokemon/:pokemonId" element={<Pokemon />} />
-              <Route path="game" element={<GamePresentation />} />
-              <Route path="game/easy" element={<EasyGame />} />
-              <Route path="game/hard" element={<HardGame />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </Layout>
-        </BrowserRouter>
+        <SnackbarProvider>
+          <BrowserRouter>
+            <Layout>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="pokemon/:pokemonId" element={<Pokemon />} />
+                <Route path="game" element={<GamePresentation />} />
+                <Route path="game/easy" element={<EasyGame />} />
+                <Route path="game/hard" element={<HardGame />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </Layout>
+          </BrowserRouter>
+        </SnackbarProvider>
       </ThemeProvider>
     </ColorModeContext.Provider>
   );

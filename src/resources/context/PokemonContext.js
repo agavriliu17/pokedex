@@ -5,6 +5,7 @@ const PokemonContext = createContext();
 export const PokemonProvider = ({ children }) => {
   const [selectedPokemon, setSelectedPokemon] = useState({});
   const [favoritePokemons, setFavoritesPokemons] = useState([]);
+  const [gameGreetPlayed, setGameGreetPlayed] = useState(false);
 
   useEffect(() => {
     const savedFavPokemons = localStorage.getItem("favPokemons");
@@ -42,6 +43,8 @@ export const PokemonProvider = ({ children }) => {
         favoritePokemons,
         addToFavorites,
         removeFromFavorites,
+        gameGreetPlayed,
+        setGameGreetPlayed,
       }}
     >
       {children}

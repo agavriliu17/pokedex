@@ -8,6 +8,10 @@ import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
 import CustomCircularProgress from "../../components/CustomLoading";
 import { getPokemon } from "../../resources/apiHelper";
 import { getRandomPokemon } from "../../resources/pokemonHelper";
+import {
+  useStreaksNotification,
+  usePokemonNotification,
+} from "../../resources/hooks/useNotification";
 
 const HardGame = () => {
   const [pokemon, setPokemon] = React.useState({});
@@ -18,6 +22,9 @@ const HardGame = () => {
   const [streak, setStreak] = React.useState(0);
   const [loadedPokemons, setLoadedPokemons] = React.useState(1);
   const [error, setError] = React.useState(false);
+
+  const [openStreakNotification] = useStreaksNotification();
+  const [showPokemonName] = usePokemonNotification();
 
   const canvasRef = React.useRef(null);
 
@@ -106,6 +113,10 @@ const HardGame = () => {
 
   const validateAnswer = () => {
     if (input.toLowerCase() === pokemon.name) {
+      if ((streak + 1) % 5 === 0) {
+        openStreakNotification(streak + 1);
+      }
+
       setScore(score + 1);
       setStreak(streak + 1);
 
@@ -126,6 +137,7 @@ const HardGame = () => {
     setStreak(0);
     setLoadedPokemons(loadedPokemons + 1);
     setError(false);
+    showPokemonName(pokemon.name);
   };
 
   return (

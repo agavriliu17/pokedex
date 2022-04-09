@@ -8,6 +8,7 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 
 import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
 import CustomCircularProgress from "../../components/CustomLoading";
+import { useStreaksNotification } from "../../resources/hooks/useNotification";
 
 import { getPokemon } from "../../resources/apiHelper";
 
@@ -28,6 +29,8 @@ const EasyGame = () => {
   const [loading, setLoading] = React.useState(true);
   const [loadedPokemons, setLoadedPokemons] = React.useState(1);
   const [error, setError] = React.useState(false);
+
+  const [openStreakNotification] = useStreaksNotification();
 
   const handleInput = (e) => {
     setInput(e.target.value);
@@ -73,11 +76,16 @@ const EasyGame = () => {
 
   const validateAnswer = () => {
     if (input.toLowerCase() === pokemon.name) {
+      if ((streak + 1) % 5 === 0) {
+        openStreakNotification(streak + 1);
+      }
+
       setScore(score + 1);
       setStreak(streak + 1);
 
       setLoadedPokemons(loadedPokemons + 1);
       setError(false);
+
       if (score === highScore) {
         setHighScore(score + 1);
         localStorage.setItem("highScore_easy", JSON.stringify(score + 1));

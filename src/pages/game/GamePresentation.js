@@ -3,9 +3,24 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
+import introSound from "../../sounds/who-that-pokemon-sound.mp3";
+import PokemonContext from "../../resources/context/PokemonContext";
 
 const GamePresentation = () => {
+  const { gameGreetPlayed, setGameGreetPlayed } =
+    React.useContext(PokemonContext);
   const navigate = useNavigate();
+
+  React.useEffect(() => {
+    if (!gameGreetPlayed) {
+      const audio = new Audio(introSound);
+      audio.play();
+
+      setGameGreetPlayed(true);
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Box

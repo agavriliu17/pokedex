@@ -5,10 +5,8 @@ import App from "./App";
 import { PokemonProvider } from "./resources/context/PokemonContext";
 
 ReactDOM.render(
-  <React.StrictMode>
-    <PokemonProvider>
-      <App />
-    </PokemonProvider>
-  </React.StrictMode>,
+  <PokemonProvider>
+    <App />
+  </PokemonProvider>,
   document.getElementById("root")
 );

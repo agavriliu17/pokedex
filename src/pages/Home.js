@@ -3,8 +3,8 @@ import React from "react";
 import Typography from "@mui/material/Typography";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
-import { Button } from "@mui/material";
 import Tooltip from "@mui/material/Tooltip";
+import Button from "@mui/material/Button";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
@@ -19,7 +19,6 @@ import PreviewCard from "../components/cards/PreviewCard";
 import PokemonContext from "../resources/context/PokemonContext";
 import { getPokemons } from "../resources/apiHelper";
 import { useScrollToTop } from "../resources/hooks/useScrollToTop";
-import { motion } from "framer-motion";
 
 function Home() {
   const [pokemons, setPokemons] = React.useState([]);
@@ -186,8 +185,6 @@ function Home() {
               position: "fixed",
             }}
             onClick={scrollToTop}
-            component={motion.div}
-            //TODO: Animate
           >
             <ArrowUpwardIcon />
           </Fab>
