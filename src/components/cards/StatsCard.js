@@ -29,8 +29,8 @@ const StatsCard = ({ cardColor, stats }) => {
   const theme = useTheme();
 
   const calculateStatLevel = (score) => {
-    if (score <= 40) return theme.palette.lowStat;
-    else if (score < 100) return theme.palette.mediumStat;
+    if (score <= 60) return theme.palette.lowStat;
+    else if (score < 120) return theme.palette.mediumStat;
     return theme.palette.highStat;
   };
   return (
@@ -70,7 +70,7 @@ const StatsCard = ({ cardColor, stats }) => {
                   <Box sx={{ width: "100%" }}>
                     <BorderLinearProgress
                       variant="determinate"
-                      value={stat.base_stat / 2}
+                      value={(stat.base_stat * 100) / 255}
                       sx={{
                         "& .MuiLinearProgress-barColorPrimary": {
                           backgroundColor: calculateStatLevel(stat.base_stat),

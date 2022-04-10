@@ -120,7 +120,7 @@ function Home() {
                 ))
               : pokemons.length > 0 && <UnknownPokemon />}
             {loading &&
-              [...Array(9)].map((el, ind) => <LoadingPreviewCard key={ind} />)}
+              [...Array(21)].map((el, ind) => <LoadingPreviewCard key={ind} />)}
             <Box
               sx={{
                 width: "100%",
