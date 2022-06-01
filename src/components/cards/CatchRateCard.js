@@ -9,9 +9,9 @@ import MenuItem from "@mui/material/MenuItem";
 import Checkbox from "@mui/material/Checkbox";
 import Paper from "@mui/material/Paper";
 import Link from "@mui/material/Link";
-import Fade from "@mui/material/Fade";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import OutlinedInput from "@mui/material/OutlinedInput";
+import Pulse from "react-reveal/Pulse";
 
 import pokeball from "../../images/pokeballs/Simple-pokeball.png";
 import greatball from "../../images/pokeballs/Great-ball.png";
@@ -84,7 +84,7 @@ const CatchRateCard = ({ cardColor, catchRate, pokemonHealth }) => {
   };
 
   return (
-    <Fade in timeout={500}>
+    <Pulse spy={calculated}>
       <Card
         raised
         sx={{
@@ -335,7 +335,7 @@ const CatchRateCard = ({ cardColor, catchRate, pokemonHealth }) => {
           </Box>
         )}
       </Card>
-    </Fade>
+    </Pulse>
   );
 };
 

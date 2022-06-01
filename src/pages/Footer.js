@@ -2,7 +2,9 @@ import React from "react";
 
 import Box from "@mui/material/Box";
 import GitHubIcon from "@mui/icons-material/GitHub";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import IconButton from "@mui/material/IconButton";
+import Fade from "react-reveal/Fade";
 
 import footerLight from "../images/footer/footerLight.svg";
 import footerDark from "../images/footer/footerDark.svg";
@@ -13,6 +15,10 @@ const Footer = () => {
 
   const handleGithubRedirect = () => {
     window.open("https://github.com/agavriliu17/fiipractic-bytex-pokedex");
+  };
+
+  const handleLinkedInRedirect = () => {
+    window.open("https://www.linkedin.com/in/alin-adrian-gavriliu-69166623a/");
   };
 
   return (
@@ -41,12 +47,20 @@ const Footer = () => {
           justifyContent: "center",
         }}
       >
-        <IconButton
-          onClick={handleGithubRedirect}
-          sx={{ height: "fit-content" }}
-        >
-          <GitHubIcon sx={{ fontSize: "50px" }} />
-        </IconButton>
+        <Fade cascade>
+          <IconButton
+            onClick={handleGithubRedirect}
+            sx={{ height: "fit-content", marginRight: "25px" }}
+          >
+            <GitHubIcon sx={{ fontSize: "50px" }} />
+          </IconButton>
+          <IconButton
+            onClick={handleLinkedInRedirect}
+            sx={{ height: "fit-content", marginLeft: "25px" }}
+          >
+            <LinkedInIcon sx={{ fontSize: "50px" }} />
+          </IconButton>
+        </Fade>
       </Box>
     </Box>
   );

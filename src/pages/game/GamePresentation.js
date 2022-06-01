@@ -14,6 +14,7 @@ const GamePresentation = () => {
   React.useEffect(() => {
     if (!gameGreetPlayed) {
       const audio = new Audio(introSound);
+      audio.volume = 0.2;
       audio.play();
 
       setGameGreetPlayed(true);

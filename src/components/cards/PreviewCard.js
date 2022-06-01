@@ -3,8 +3,8 @@ import { useContext } from "react";
 import Typography from "@mui/material/Typography";
 import Card from "@mui/material/Card";
 import Box from "@mui/material/Box";
-import Fade from "@mui/material/Fade";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import Fade from "react-reveal/Fade";
 
 import PokemonContext from "../../resources/context/PokemonContext";
 
@@ -28,7 +28,7 @@ const PreviewCard = ({ pokemon }) => {
   const isFavorite = favoritePokemons.find((fav) => fav.id === pokemon.id);
 
   return (
-    <Fade in timeout={500}>
+    <Fade>
       <Card
         raised
         sx={{
