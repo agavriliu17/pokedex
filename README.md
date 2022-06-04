@@ -21,11 +21,7 @@ A simple Pokemon catalogue made with React and [Material UI](https://mui.com/), 
 
 You can visit the Pokédex App [here.](https://fiipractic-pokedex.netlify.app/)
 
-<div align="center">
-
 ![Demo](src\images\pokedex_demo.gif)
-
-</div>
 
 ### How to run
 
